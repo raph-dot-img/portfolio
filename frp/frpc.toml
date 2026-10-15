@@ -1,0 +1,24 @@
+# Configuration du client FRP.
+# Les valeurs sensibles viennent du fichier .env via les variables
+# d'environnement du conteneur, rien n'est écrit en dur ici.
+
+serverAddr = "{{ .Envs.FRP_SERVER_ADDRESS }}"
+serverPort = {{ .Envs.FRP_SERVER_BIND_PORT }}
+
+auth.method = "token"
+auth.token = "{{ .Envs.FRP_AUTH_TOKEN }}"
+
+log.to = "console"
+log.level = "info"
+
+# Reconnexion automatique si le serveur devient injoignable
+loginFailExit = false
+
+[[proxies]]
+name = "portfolio"
+type = "tcp"
+# Nom du service dans la stack : frpc joint nginx par le réseau Docker,
+# sans qu'aucun port n'ait besoin d'être publié sur l'hôte.
+localIP = "portfolio"
+localPort = 80
+remotePort = {{ .Envs.FRP_SERVER_REMOTE_PORT }}

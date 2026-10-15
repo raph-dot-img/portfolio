@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Pages d'erreur 
+Disallow: /erreurs/
+Disallow: /en/errors/
+
+Sitemap: https://canevet.eu/sitemap.xml
+
+# Arrete de fouiller, il n'y a rien a voir ici.
+#
+#     /\_/\
+#    ( o.o )   < kitty cat
+#     > ^ <

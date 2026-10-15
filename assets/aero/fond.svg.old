@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" preserveAspectRatio="xMidYMid slice">
+  <!-- Fond d'écran du thème Aero : ciel, soleil, nuages, rubans façon
+       Vista et collines façon XP. Servi en fichier car la CSP refuse les
+       images en data: comme les styles en ligne. -->
+  <defs>
+    <linearGradient id="ciel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a4796"/>
+      <stop offset=".32" stop-color="#2a86da"/>
+      <stop offset=".62" stop-color="#86cdf5"/>
+      <stop offset=".8" stop-color="#dff4ff"/>
+    </linearGradient>
+    <radialGradient id="soleil" cx="1480" cy="110" r="620" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset=".08" stop-color="#fff" stop-opacity=".8"/>
+      <stop offset=".3" stop-color="#d9f3ff" stop-opacity=".3"/>
+      <stop offset="1" stop-color="#d9f3ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ruban-blanc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".3" stop-color="#fff" stop-opacity=".55"/>
+      <stop offset=".7" stop-color="#e9fbff" stop-opacity=".7"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".1"/>
+    </linearGradient>
+    <linearGradient id="ruban-cyan" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5fe3ff" stop-opacity=".05"/>
+      <stop offset=".45" stop-color="#5fe3ff" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#b8f4ff" stop-opacity=".2"/>
+    </linearGradient>
+    <linearGradient id="ruban-vert" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b6ff5c" stop-opacity=".1"/>
+      <stop offset=".5" stop-color="#8ef05a" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#d6ff9e" stop-opacity=".15"/>
+    </linearGradient>
+    <linearGradient id="colline-fond" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a6e36b"/>
+      <stop offset=".35" stop-color="#5fb836"/>
+      <stop offset="1" stop-color="#2f7f20"/>
+    </linearGradient>
+    <linearGradient id="colline-avant" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8fdc4f"/>
+      <stop offset=".3" stop-color="#4daa28"/>
+      <stop offset="1" stop-color="#1f6a14"/>
+    </linearGradient>
+    <linearGradient id="reflet-colline" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="flou-nuage" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+    <filter id="flou-leger" x="-10%" y="-50%" width="120%" height="200%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <filter id="flou-rayon" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#ciel)"/>
+
+  <!-- Rayons de soleil -->
+  <g fill="#fff" filter="url(#flou-rayon)">
+    <polygon points="1480,110 860,1080 1010,1080" opacity=".1"/>
+    <polygon points="1480,110 1180,1080 1260,1080" opacity=".08"/>
+    <polygon points="1480,110 1500,1080 1640,1080" opacity=".09"/>
+    <polygon points="1480,110 1920,760 1920,880" opacity=".08"/>
+    <polygon points="1480,110 400,1080 520,1080" opacity=".06"/>
+  </g>
+  <rect width="1920" height="1080" fill="url(#soleil)"/>
+
+  <!-- Nuages -->
+  <g fill="#fff" filter="url(#flou-nuage)">
+    <g opacity=".85">
+      <ellipse cx="260" cy="250" rx="150" ry="46"/>
+      <ellipse cx="370" cy="215" rx="110" ry="58"/>
+      <ellipse cx="480" cy="250" rx="140" ry="44"/>
+    </g>
+    <g opacity=".7">
+      <ellipse cx="980" cy="330" rx="170" ry="40"/>
+      <ellipse cx="1090" cy="300" rx="100" ry="48"/>
+      <ellipse cx="1190" cy="335" rx="130" ry="36"/>
+    </g>
+    <g opacity=".6">
+      <ellipse cx="1700" cy="420" rx="160" ry="34"/>
+      <ellipse cx="1790" cy="395" rx="90" ry="40"/>
+    </g>
+    <g opacity=".5">
+      <ellipse cx="640" cy="440" rx="120" ry="26"/>
+      <ellipse cx="80" cy="470" rx="140" ry="28"/>
+    </g>
+  </g>
+
+  <!-- Rubans lumineux façon Windows Vista -->
+  <g>
+    <path d="M0,600 C380,500 760,690 1160,590 S1720,410 1920,455 L1920,515 C1720,470 1500,640 1160,672 S380,585 0,690 Z" fill="url(#ruban-cyan)"/>
+    <path d="M0,640 C420,545 820,730 1220,640 S1760,490 1920,520 L1920,548 C1740,520 1480,690 1200,708 S400,622 0,700 Z" fill="url(#ruban-blanc)"/>
+    <path d="M0,700 C440,610 840,790 1260,700 S1780,575 1920,605 L1920,650 C1720,625 1480,780 1220,786 S420,700 0,770 Z" fill="url(#ruban-vert)"/>
+    <path d="M0,652 C420,556 820,742 1220,652 S1760,502 1920,530" fill="none" stroke="#fff" stroke-width="3" stroke-opacity=".8" filter="url(#flou-leger)"/>
+    <path d="M0,712 C440,622 840,802 1260,712 S1780,587 1920,617" fill="none" stroke="#f4ffe0" stroke-width="2" stroke-opacity=".6" filter="url(#flou-leger)"/>
+  </g>
+
+  <!-- Collines -->
+  <path d="M0,830 C260,760 620,770 940,812 S1580,770 1920,742 L1920,1080 L0,1080 Z" fill="url(#colline-fond)"/>
+  <path d="M0,830 C260,760 620,770 940,812 S1580,770 1920,742 L1920,790 C1580,815 1240,860 940,850 S260,800 0,870 Z" fill="url(#reflet-colline)" opacity=".5"/>
+  <path d="M0,930 C380,840 860,860 1200,925 S1720,905 1920,860 L1920,1080 L0,1080 Z" fill="url(#colline-avant)"/>
+  <path d="M0,930 C380,840 860,860 1200,925 S1720,905 1920,860 L1920,900 C1720,945 1500,960 1200,960 S380,880 0,968 Z" fill="url(#reflet-colline)" opacity=".45"/>
+
+  <!-- Petits éclats près du soleil -->
+  <g fill="#fff">
+    <path d="M1330,230 l4,14 14,4 -14,4 -4,14 -4,-14 -14,-4 14,-4 Z" opacity=".8"/>
+    <path d="M1610,300 l3,10 10,3 -10,3 -3,10 -3,-10 -10,-3 10,-3 Z" opacity=".7"/>
+    <path d="M1240,140 l2,7 7,2 -7,2 -2,7 -2,-7 -7,-2 7,-2 Z" opacity=".7"/>
+  </g>
+</svg>

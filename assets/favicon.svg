@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Orbe brillant façon bouton Démarrer de Windows 7, aux initiales RC.
+       Sert aussi d'orbe dans la barre des tâches (voir .brand dans style.css). -->
+  <defs>
+    <radialGradient id="boule" cx=".5" cy=".85" r=".75">
+      <stop offset="0" stop-color="#8ff0ff"/>
+      <stop offset=".35" stop-color="#2a9be8"/>
+      <stop offset=".8" stop-color="#0b4f9c"/>
+      <stop offset="1" stop-color="#062f66"/>
+    </radialGradient>
+    <linearGradient id="reflet" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".08"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="url(#boule)" stroke="#04244f" stroke-width="2"/>
+  <circle cx="32" cy="32" r="28" fill="none" stroke="#fff" stroke-opacity=".35"/>
+  <text x="32" y="42" font-family="'Segoe UI', system-ui, sans-serif" font-size="27"
+        font-weight="700" fill="#fff" text-anchor="middle" stroke="#06305f" stroke-width=".8">RC</text>
+  <ellipse cx="32" cy="18" rx="21" ry="13" fill="url(#reflet)"/>
+</svg>

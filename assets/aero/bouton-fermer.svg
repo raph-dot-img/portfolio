@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47 20" width="47" height="20">
+  <!-- Bouton Fermer seul, celui des boîtes de dialogue de Windows 7. -->
+  <defs>
+    <linearGradient id="rouge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eeb0a0"/>
+      <stop offset=".48" stop-color="#dd8770"/>
+      <stop offset=".5" stop-color="#c8432a"/>
+      <stop offset="1" stop-color="#e0745a"/>
+    </linearGradient>
+  </defs>
+  <path d="M.5,-1 H46.5 V15.5 a4,4 0 0 1 -4,4 H4.5 a4,4 0 0 1 -4,-4 Z" fill="url(#rouge)"/>
+  <path d="M1.5,0 V15.5 a3,3 0 0 0 3,3 H42.5 a3,3 0 0 0 3,-3 V0" fill="none" stroke="#fff" stroke-opacity=".55"/>
+  <path d="M.5,-1 V15.5 a4,4 0 0 0 4,4 H42.5 a4,4 0 0 0 4,-4 V-1" fill="none" stroke="#000" stroke-opacity=".55"/>
+  <path d="M18,4.5 L23.5,9 29,4.5 31,6.5 26,10.5 31,14.5 29,16.5 23.5,12 18,16.5 16,14.5 21,10.5 16,6.5 Z" fill="#fff" stroke="#1d2b3a" stroke-opacity=".8"/>
+</svg>
