@@ -60,14 +60,16 @@ Key consequences to keep in mind:
   and comments stay French as everywhere else.
 - **The contact form posts to Formspree** from `script.js` via AJAX so the page is never left. The endpoint is hardcoded in `index.html`'s `form action` (`.env`'s `FORMSPREE_ENDPOINT` is a convenience copy, not consumed by anything at runtime). Status messages are written into `#form-status` with class `ok` / `erreur`.
 
-## Aero theme (branch `aero` only)
+## Windows 9x theme
 
-This branch restyles the site as a Windows 7 / Vista "Frutiger Aero" desktop. `main` keeps the plain theme; don't merge one into the other.
+The site is styled as a Windows 95 / 98 / 2000 desktop (teal desktop, grey bevelled windows, taskbar).
 
-- **Every decorative image is a file in `assets/aero/`** (wallpaper, bubbles, caption buttons, icons, user tile). The CSP's `img-src 'self'` rejects `data:` URIs and `style-src 'self'` rejects inline styles, so nothing can be inlined. `assets/favicon.svg` doubles as the taskbar Start orb.
-- **Each `main > section` except `.hero` is drawn as a window, and `main.erreur` as a dialog**, with no extra markup: a transparent border over a glass background forms the frame, the thick top border is the (textless) title bar, and the white client area is a `padding-box` background layer. `::before` / `::after` are taken (outer highlight, caption buttons), so don't reuse them on those elements.
-- **`.topbar` is a taskbar fixed at the bottom**; `body` reserves its height with `padding-bottom`. `script.js` adds the clock and, on pages with several sections, the `fenetres-actives` / `premier-plan` classes and `aria-current` on taskbar links. Pages without the script simply show every window as active.
-- **Wallpaper and bubbles are `body::before` / `body::after`**, fixed at `z-index: -1`. The bubble tile is 720px tall and the animation moves exactly one tile, so change both together. Motion and transparency are reduced under the matching `prefers-*` media queries.
+- **Every decorative image is a file in `assets/win9x/`** (pixel icons, caption buttons, checkboxes, wizard banner, desktop icons). The CSP's `img-src 'self'` rejects `data:` URIs and `style-src 'self'` rejects inline styles, so nothing can be inlined. The 16 x 16 icons are drawn as pixel maps: keep `shape-rendering="crispEdges"` and integer scaling (16 or 32 px) so they stay sharp. `assets/favicon.svg` is the "computer" icon, also used on the Start button.
+- **Each `main > section` is a window, and its `h2` is the title bar** (real text). `h2::before` is the per-section icon (selected by section `id`), `h2::after` the caption buttons, `section::after` the resize grip. `.hero` (welcome wizard) and `main.erreur` (message box) have no h2, so their title bar is their own `::before`, with the text set in CSS `content` and a `:lang(en)` override. Any new visible CSS string needs both languages.
+- **Bevels are the `--relief*` / `--creux*` / `--enfonce` box-shadow variables**; reuse them rather than borders.
+- **`.topbar` is a taskbar fixed at the bottom**; `body` reserves its height with `padding-bottom`. `script.js` turns `.brand` into a Start button with a menu built from the links already on the page, adds the clock, and on pages with several sections sets `fenetres-actives` / `premier-plan` (blue vs grey title bars) and `aria-current` on taskbar links. Without the script the brand stays a label and every window shows as active.
+- **Desktop icons are `body::before` at `z-index: -1`**, shown from 1180px wide; `body` must keep no background of its own (the colour is on `html`) or it hides them.
+- **5xx error pages carry `body.ecran-bleu`** and render as a blue screen in VT323 (`assets/polices/`, OFL). 4xx pages are message-box dialogs; 418 is `chat.exe`.
 
 ## Conventions
 

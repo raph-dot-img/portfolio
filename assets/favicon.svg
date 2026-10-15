@@ -1,21 +1,73 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Orbe brillant façon bouton Démarrer de Windows 7, aux initiales RC.
-       Sert aussi d'orbe dans la barre des tâches (voir .brand dans style.css). -->
-  <defs>
-    <radialGradient id="boule" cx=".5" cy=".85" r=".75">
-      <stop offset="0" stop-color="#8ff0ff"/>
-      <stop offset=".35" stop-color="#2a9be8"/>
-      <stop offset=".8" stop-color="#0b4f9c"/>
-      <stop offset="1" stop-color="#062f66"/>
-    </radialGradient>
-    <linearGradient id="reflet" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#fff" stop-opacity=".9"/>
-      <stop offset="1" stop-color="#fff" stop-opacity=".08"/>
-    </linearGradient>
-  </defs>
-  <circle cx="32" cy="32" r="30" fill="url(#boule)" stroke="#04244f" stroke-width="2"/>
-  <circle cx="32" cy="32" r="28" fill="none" stroke="#fff" stroke-opacity=".35"/>
-  <text x="32" y="42" font-family="'Segoe UI', system-ui, sans-serif" font-size="27"
-        font-weight="700" fill="#fff" text-anchor="middle" stroke="#06305f" stroke-width=".8">RC</text>
-  <ellipse cx="32" cy="18" rx="21" ry="13" fill="url(#reflet)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges">
+  <!-- Icône « Poste de travail » en pixels : favicon et bouton Démarrer. -->
+  <rect x="1" y="1" width="13" height="1" fill="#000000"/>
+  <rect x="1" y="2" width="1" height="1" fill="#000000"/>
+  <rect x="2" y="2" width="11" height="1" fill="#dfdfdf"/>
+  <rect x="13" y="2" width="1" height="1" fill="#808080"/>
+  <rect x="14" y="2" width="1" height="1" fill="#000000"/>
+  <rect x="1" y="3" width="1" height="1" fill="#000000"/>
+  <rect x="2" y="3" width="1" height="1" fill="#dfdfdf"/>
+  <rect x="3" y="3" width="9" height="1" fill="#000000"/>
+  <rect x="12" y="3" width="1" height="1" fill="#dfdfdf"/>
+  <rect x="13" y="3" width="1" height="1" fill="#808080"/>
+  <rect x="14" y="3" width="1" height="1" fill="#000000"/>
+  <rect x="1" y="4" width="1" height="1" fill="#000000"/>
+  <rect x="2" y="4" width="1" height="1" fill="#dfdfdf"/>
+  <rect x="3" y="4" width="1" height="1" fill="#000000"/>
+  <rect x="4" y="4" width="1" height="1" fill="#1084d0"/>
+  <rect x="5" y="4" width="6" height="1" fill="#000080"/>
+  <rect x="11" y="4" width="1" height="1" fill="#000000"/>
+  <rect x="12" y="4" width="1" height="1" fill="#dfdfdf"/>
+  <rect x="13" y="4" width="1" height="1" fill="#808080"/>
+  <rect x="14" y="4" width="1" height="1" fill="#000000"/>
+  <rect x="1" y="5" width="1" height="1" fill="#000000"/>
+  <rect x="2" y="5" width="1" height="1" fill="#dfdfdf"/>
+  <rect x="3" y="5" width="1" height="1" fill="#000000"/>
+  <rect x="4" y="5" width="1" height="1" fill="#00ffff"/>
+  <rect x="5" y="5" width="6" height="1" fill="#000080"/>
+  <rect x="11" y="5" width="1" height="1" fill="#000000"/>
+  <rect x="12" y="5" width="1" height="1" fill="#dfdfdf"/>
+  <rect x="13" y="5" width="1" height="1" fill="#808080"/>
+  <rect x="14" y="5" width="1" height="1" fill="#000000"/>
+  <rect x="1" y="6" width="1" height="1" fill="#000000"/>
+  <rect x="2" y="6" width="1" height="1" fill="#dfdfdf"/>
+  <rect x="3" y="6" width="1" height="1" fill="#000000"/>
+  <rect x="4" y="6" width="1" height="1" fill="#1084d0"/>
+  <rect x="5" y="6" width="6" height="1" fill="#000080"/>
+  <rect x="11" y="6" width="1" height="1" fill="#000000"/>
+  <rect x="12" y="6" width="1" height="1" fill="#dfdfdf"/>
+  <rect x="13" y="6" width="1" height="1" fill="#808080"/>
+  <rect x="14" y="6" width="1" height="1" fill="#000000"/>
+  <rect x="1" y="7" width="1" height="1" fill="#000000"/>
+  <rect x="2" y="7" width="1" height="1" fill="#dfdfdf"/>
+  <rect x="3" y="7" width="1" height="1" fill="#000000"/>
+  <rect x="4" y="7" width="7" height="1" fill="#000080"/>
+  <rect x="11" y="7" width="1" height="1" fill="#000000"/>
+  <rect x="12" y="7" width="1" height="1" fill="#dfdfdf"/>
+  <rect x="13" y="7" width="1" height="1" fill="#808080"/>
+  <rect x="14" y="7" width="1" height="1" fill="#000000"/>
+  <rect x="1" y="8" width="1" height="1" fill="#000000"/>
+  <rect x="2" y="8" width="1" height="1" fill="#dfdfdf"/>
+  <rect x="3" y="8" width="9" height="1" fill="#000000"/>
+  <rect x="12" y="8" width="1" height="1" fill="#dfdfdf"/>
+  <rect x="13" y="8" width="1" height="1" fill="#808080"/>
+  <rect x="14" y="8" width="1" height="1" fill="#000000"/>
+  <rect x="1" y="9" width="1" height="1" fill="#000000"/>
+  <rect x="2" y="9" width="10" height="1" fill="#dfdfdf"/>
+  <rect x="12" y="9" width="1" height="1" fill="#00ff00"/>
+  <rect x="13" y="9" width="1" height="1" fill="#808080"/>
+  <rect x="14" y="9" width="1" height="1" fill="#000000"/>
+  <rect x="1" y="10" width="14" height="1" fill="#000000"/>
+  <rect x="4" y="11" width="1" height="1" fill="#000000"/>
+  <rect x="5" y="11" width="6" height="1" fill="#808080"/>
+  <rect x="11" y="11" width="1" height="1" fill="#000000"/>
+  <rect x="1" y="12" width="14" height="1" fill="#000000"/>
+  <rect x="0" y="13" width="1" height="1" fill="#000000"/>
+  <rect x="1" y="13" width="12" height="1" fill="#dfdfdf"/>
+  <rect x="13" y="13" width="1" height="1" fill="#808080"/>
+  <rect x="14" y="13" width="1" height="1" fill="#000000"/>
+  <rect x="0" y="14" width="1" height="1" fill="#000000"/>
+  <rect x="1" y="14" width="13" height="1" fill="#808080"/>
+  <rect x="14" y="14" width="1" height="1" fill="#000000"/>
+  <rect x="0" y="15" width="15" height="1" fill="#000000"/>
 </svg>

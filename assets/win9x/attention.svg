@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Icône « Avertissement » : triangle jaune et point d'exclamation. -->
+  <path d="M17.5 4 L31 29 L4 29 Z" fill="#808080"/>
+  <path d="M15.5 2 L29 27 L2 27 Z" fill="#ffff00" stroke="#000000" stroke-width="1" stroke-linejoin="round"/>
+  <g fill="#000000" shape-rendering="crispEdges">
+    <rect x="14" y="9" width="3" height="10"/>
+    <rect x="14" y="21" width="3" height="3"/>
+  </g>
+</svg>
