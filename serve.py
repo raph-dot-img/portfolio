@@ -39,6 +39,7 @@ RACINES_PUBLIQUES = {
     "index.html",
     "googlefcec097abc8fdb0a.html",
     "confidentialite.html",
+    "credits.html",
     "style.css",
     "script.js",
     "robots.txt",
