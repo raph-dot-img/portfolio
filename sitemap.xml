@@ -37,4 +37,22 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url>
+    <loc>https://canevet.eu/credits.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://canevet.eu/credits.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://canevet.eu/en/credits.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://canevet.eu/credits.html"/>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://canevet.eu/en/credits.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://canevet.eu/credits.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://canevet.eu/en/credits.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://canevet.eu/credits.html"/>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
 </urlset>
