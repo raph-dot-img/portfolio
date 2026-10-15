@@ -1,0 +1,26 @@
+
+Scope of the MIT License in LICENSE
+
+Personal content is excluded from that license.
+
+The "Software" it covers is the source code of the site (HTML markup,
+CSS, JavaScript, configuration and scripts) and the icons in assets/win9x/.
+The following personal content is NOT covered by the MIT License and remains
+all rights reserved:
+
+- assets/CANEVET_Raphael_CV.pdf (the CV);
+- the written content of the pages that describe the author (biography,
+  education, skills, projects, internships, contact details), in French and
+  in English;
+- the author's name, identity and PGP key
+  (assets/Raphael_CANEVET_0xB78F8AFB9EF231BC_public.asc). The public key may
+  of course be used to encrypt messages to the author or verify signatures,
+  but not be presented as anyone else's.
+
+If you reuse this code, replace that content with your own.
+
+Third-party files are not covered either and keep their own terms:
+- assets/polices/ is under the SIL Open Font License 1.1
+  (see assets/polices/LICENCE-VT323.txt);
+- assets/laughing-cat.gif is an Internet meme whose original author is
+  unknown; no license is granted for it here.
