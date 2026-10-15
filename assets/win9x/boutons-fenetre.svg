@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 14" width="50" height="14" shape-rendering="crispEdges">
+  <!-- Boutons Réduire / Agrandir / Fermer, décoratifs. -->
+  <rect x="0" width="16" height="14" fill="#000000"/>
+  <rect x="0" width="15" height="13" fill="#ffffff"/>
+  <rect x="1" y="1" width="14" height="12" fill="#808080"/>
+  <rect x="1" y="1" width="13" height="11" fill="#dfdfdf"/>
+  <rect x="2" y="2" width="12" height="10" fill="#c0c0c0"/>
+  <rect x="0" y="9" width="6" height="2" fill="#000000" transform="translate(4 0)"/>
+  <rect x="16" width="16" height="14" fill="#000000"/>
+  <rect x="16" width="15" height="13" fill="#ffffff"/>
+  <rect x="17" y="1" width="14" height="12" fill="#808080"/>
+  <rect x="17" y="1" width="13" height="11" fill="#dfdfdf"/>
+  <rect x="18" y="2" width="12" height="10" fill="#c0c0c0"/>
+  <rect x="16" y="2" width="9" height="9" fill="#000000" transform="translate(3 0)"/>
+  <rect x="16" y="4" width="7" height="6" fill="#c0c0c0" transform="translate(4 0)"/>
+  <rect x="34" width="16" height="14" fill="#000000"/>
+  <rect x="34" width="15" height="13" fill="#ffffff"/>
+  <rect x="35" y="1" width="14" height="12" fill="#808080"/>
+  <rect x="35" y="1" width="13" height="11" fill="#dfdfdf"/>
+  <rect x="36" y="2" width="12" height="10" fill="#c0c0c0"/>
+  <rect x="34" y="3" width="2" height="1" fill="#000000" transform="translate(4 0)"/>
+  <rect x="34" y="3" width="2" height="1" fill="#000000" transform="translate(10 0)"/>
+  <rect x="34" y="4" width="2" height="1" fill="#000000" transform="translate(5 0)"/>
+  <rect x="34" y="4" width="2" height="1" fill="#000000" transform="translate(9 0)"/>
+  <rect x="34" y="5" width="2" height="1" fill="#000000" transform="translate(6 0)"/>
+  <rect x="34" y="5" width="2" height="1" fill="#000000" transform="translate(8 0)"/>
+  <rect x="34" y="6" width="2" height="1" fill="#000000" transform="translate(7 0)"/>
+  <rect x="34" y="6" width="2" height="1" fill="#000000" transform="translate(7 0)"/>
+  <rect x="34" y="7" width="2" height="1" fill="#000000" transform="translate(8 0)"/>
+  <rect x="34" y="7" width="2" height="1" fill="#000000" transform="translate(6 0)"/>
+  <rect x="34" y="8" width="2" height="1" fill="#000000" transform="translate(9 0)"/>
+  <rect x="34" y="8" width="2" height="1" fill="#000000" transform="translate(5 0)"/>
+  <rect x="34" y="9" width="2" height="1" fill="#000000" transform="translate(4 0)"/>
+  <rect x="34" y="9" width="2" height="1" fill="#000000" transform="translate(10 0)"/>
+</svg>

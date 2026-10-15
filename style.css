@@ -1,73 +1,76 @@
 /*
-  Comfortaa (variable, graisses 300 a 700), SIL Open Font License 1.1.
-  Fichiers repris du paquet @fontsource-variable/comfortaa 5.3.0 et servis
-  depuis assets/polices/ : aucun appel a un CDN, rien a installer.
-  La licence accompagne les fichiers (assets/polices/LICENCE-Comfortaa.txt).
+  VT323, SIL Open Font License 1.1 : police de console, utilisée seulement
+  par l'écran bleu des erreurs 5xx. Fichier repris du paquet @fontsource/vt323
+  5.3.0 et servi depuis assets/polices/ : aucun appel à un CDN.
+  La licence accompagne le fichier (assets/polices/LICENCE-VT323.txt).
 */
 @font-face {
-  font-family: "Comfortaa";
+  font-family: "VT323";
   font-style: normal;
-  font-weight: 300 700;
+  font-weight: 400;
   font-display: swap;
-  src: url("assets/polices/comfortaa-latin-wght-normal.woff2") format("woff2-variations");
-  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-}
-
-/* Rarement telecharge : aucun texte du site n'y touche pour l'instant. */
-@font-face {
-  font-family: "Comfortaa";
-  font-style: normal;
-  font-weight: 300 700;
-  font-display: swap;
-  src: url("assets/polices/comfortaa-latin-ext-wght-normal.woff2") format("woff2-variations");
-  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+  src: url("assets/polices/vt323-latin-400-normal.woff2") format("woff2");
 }
 
 
 /*
-  Thème « Frutiger Aero » (branche aero) : le site devient un bureau
-  Windows 7 / Vista.
-  - Le fond d'écran (ciel, rubans, collines) et les bulles sont deux couches
-    fixes posées par body::before et body::after, sous tout le contenu.
-  - Chaque section (sauf .hero) est une fenêtre Aero : la bordure, transparente,
-    laisse voir un fond en verre (cadre et barre de titre), et la zone cliente
-    blanche est un fond limité à la padding-box. Pas de balise en plus.
-  - .topbar devient la barre des tâches, fixée en bas de l'écran.
-  Toutes les images viennent de assets/aero/ : la CSP refuse les data:
+  Thème « Windows 95 / 98 / 2000 » : le site devient un bureau Windows 9x.
+  - Le bureau est l'aplat bleu canard ; ses icônes (décoratives) sont posées
+    par body::before sur les écrans assez larges pour les accueillir.
+  - Chaque section est une fenêtre grise en relief. Son h2 devient la barre
+    de titre (vrai texte, donc lu normalement) ; l'icône et les boutons de la
+    barre de titre sont h2::before et h2::after.
+  - .hero est un assistant de bienvenue et main.erreur une boîte de dialogue :
+    sans h2, leur barre de titre est leur propre ::before.
+  - .topbar devient la barre des tâches, fixée en bas ; script.js y ajoute le
+    menu Démarrer et l'horloge.
+  - Les erreurs 5xx (body.ecran-bleu) sont un écran bleu, en VT323.
+  Toutes les images viennent de assets/win9x/ : la CSP refuse les data:
   (img-src 'self') comme les styles en ligne (style-src 'self').
 */
 
 :root {
-  --fond: #ffffff;
-  --fond-alt: #f2f8fe;
-  --texte: #1b2a3a;
-  --texte-doux: #4b5d70;
-  --accent: #1a6fc9;
-  --titre: #1e3287;
-  --lien: #0066cc;
-  --lien-survol: #3399ff;
-  --bordure: #c9d9ea;
-  --vert: #22801c;
+  --bureau: #008080;
+  --gris: #c0c0c0;
+  --gris-fonce: #808080;
+  --gris-clair: #dfdfdf;
+  --noir: #0a0a0a;
+  --texte: #000000;
+  --texte-doux: #404040;
+  --lien: #0000ee;
+  --surbrillance: #000080;
+  --infobulle: #ffffe1;
 
-  /* Verre des fenêtres */
-  --client: rgba(255, 255, 255, 0.92);
-  --cadre: rgba(160, 199, 235, 0.55);
-  --cadre-inactif: rgba(215, 230, 245, 0.45);
-  --cadre-epaisseur: 8px;
-  --barre-titre: 30px;
-  --rayon-fenetre: 9px;
+  /* Barres de titre : active (dégradé de Windows 98) et inactive */
+  --titre-actif: linear-gradient(90deg, #000080, #1084d0);
+  --titre-inactif: linear-gradient(90deg, #606060, #b0b0b0);
 
-  --barre-taches: 40px;
+  /* Les quatre reliefs de Windows, en ombres internes de 1 px */
+  --relief: inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  --relief-fenetre: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px #808080, inset 2px 2px #ffffff;
+  --enfonce: inset -1px -1px #ffffff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+  --creux: inset -1px -1px #ffffff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+  --creux-leger: inset -1px -1px #ffffff, inset 1px 1px #808080;
+  /* Bouton par défaut : un liseré noir de plus autour du relief */
+  --relief-defaut: inset -1px -1px #0a0a0a, inset 1px 1px #0a0a0a, inset -2px -2px #0a0a0a, inset 2px 2px #ffffff, inset -3px -3px #808080, inset 3px 3px #dfdfdf;
+  /* Damier d'un bouton de barre des tâches enfoncé */
+  --damier: repeating-conic-gradient(#c0c0c0 0% 25%, #ffffff 0% 50%) 0 0 / 2px 2px;
+
+  --barre-taches: 30px;
+  --hauteur-titre: 22px;
   --gouttiere: 24px;
   --largeur: 920px;
 
-  --police: "Segoe UI", "Frutiger", "Frutiger Linotype", "Myriad Pro", Selawik, system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
-  --police-titre: "Comfortaa", var(--police);
+  --police: Tahoma, "Microsoft Sans Serif", "MS Sans Serif", Verdana, "DejaVu Sans", Geneva, Arial, sans-serif;
+  --police-titre: Verdana, Tahoma, "DejaVu Sans", Geneva, Arial, sans-serif;
+  --police-document: "Times New Roman", Times, "Liberation Serif", "DejaVu Serif", serif;
+  --police-console: "VT323", "Lucida Console", "Courier New", monospace;
 }
 
 * { box-sizing: border-box; }
 
 html {
+  background: var(--bureau);
   scroll-behavior: smooth;
   scroll-padding-top: 18px;
 }
@@ -77,50 +80,40 @@ body {
   min-height: 100vh;
   padding-bottom: var(--barre-taches);
   font-family: var(--police);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.55;
   color: var(--texte);
-  /* Visible le temps que le fond d'écran arrive */
-  background: #4a9fe4;
+  /* Pas de fond ici : celui de html suffit, et un fond sur body masquerait
+     les icônes du bureau (body::before, en z-index négatif). */
 }
 
-/* Fond d'écran et bulles, fixes, sous le contenu */
-body::before,
-body::after {
+/* Icônes du bureau, décoratives, dans la marge de gauche */
+body::before {
   content: "";
   position: fixed;
+  top: 10px;
+  left: 6px;
   z-index: -1;
+  display: none;
+  width: 96px;
+  height: 236px;
+  background: url("assets/win9x/bureau.svg") no-repeat;
   pointer-events: none;
 }
 
-body::before {
-  inset: 0;
-  background: #4a9fe4 url("assets/aero/fond.svg") center bottom / cover no-repeat;
+body:lang(en)::before { background-image: url("assets/win9x/bureau-en.svg"); }
+
+@media (min-width: 1180px) {
+  body::before { display: block; }
 }
 
-/* Le motif fait 720 px de haut : la couche monte d'exactement un motif
-   puis repart de zéro, sans saut visible. */
-body::after {
-  top: 0;
-  left: 0;
-  right: 0;
-  height: calc(100vh + 720px);
-  background: url("assets/aero/bulles.svg") 0 0 / 480px 720px repeat;
-  opacity: 0.85;
-  animation: bulles 70s linear infinite;
-}
-
-@keyframes bulles {
-  to { transform: translateY(-720px); }
-}
-
-::selection { background: #3399ff; color: #fff; }
+::selection { background: var(--surbrillance); color: #fff; }
 
 a { color: var(--lien); }
-a:hover { color: var(--lien-survol); }
+a:hover { color: #ff0000; }
 
 :focus-visible {
-  outline: 2px solid #3399ff;
+  outline: 1px dotted #000;
   outline-offset: 2px;
 }
 
@@ -133,48 +126,63 @@ a:hover { color: var(--lien-survol); }
   z-index: 100;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   height: var(--barre-taches);
-  padding-left: 4px;
-  color: #fff;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1) 48%, rgba(0, 0, 0, 0.04) 50%, rgba(0, 0, 0, 0.2)),
-    rgba(20, 52, 88, 0.62);
-  border-top: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.45);
-  -webkit-backdrop-filter: blur(12px) saturate(1.5);
-  backdrop-filter: blur(12px) saturate(1.5);
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.55), 0 1px 1px rgba(0, 0, 0, 0.5);
+  padding: 2px 2px 0;
+  background: var(--gris);
+  box-shadow: inset 0 1px var(--gris-clair), inset 0 2px #fff;
+  font-size: 13px;
 }
 
-/* Le nom, précédé de l'orbe « Démarrer » qui déborde au-dessus de la barre */
+/* Bouton Démarrer. Sans script, c'est un simple libellé ; script.js le
+   remplace par un vrai bouton qui ouvre le menu. */
 .brand {
   flex: none;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding-right: 10px;
-  font-size: 14px;
+  gap: 4px;
+  height: 24px;
+  margin: 0;
+  padding: 0 6px 0 4px;
+  border: 0;
+  background: var(--gris);
+  box-shadow: var(--relief);
+  color: #000;
+  font: bold 13px var(--police);
   white-space: nowrap;
 }
 
 .brand::before {
   content: "";
   flex: none;
-  width: 46px;
-  height: 46px;
-  transform: translateY(-4px);
-  background: url("assets/favicon.svg") center / contain no-repeat;
-  filter: drop-shadow(0 0 5px rgba(140, 220, 255, 0.8));
+  width: 16px;
+  height: 16px;
+  background: url("assets/win9x/poste.svg") no-repeat;
 }
 
+button.brand { cursor: pointer; }
+
+button.brand[aria-expanded="true"] {
+  padding: 1px 5px 0 5px;
+  box-shadow: var(--enfonce);
+}
+
+button.brand:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+
+/* Les liens de navigation sont les boutons des fenêtres ouvertes */
 .topbar nav {
   flex: 1 1 auto;
   min-width: 0;
   display: flex;
   gap: 3px;
   height: 100%;
-  padding: 3px 0;
+  padding: 1px 0 3px 8px;
+  /* Poignée de la zone des tâches, comme sous Windows 98 */
+  background:
+    linear-gradient(90deg, #808080 1px, #fff 1px 2px, transparent 2px) 0 3px / 2px 20px no-repeat;
   /* Sur petit écran, les boutons défilent dans la barre */
   overflow-x: auto;
   scrollbar-width: none;
@@ -183,704 +191,969 @@ a:hover { color: var(--lien-survol); }
 .topbar nav::-webkit-scrollbar { display: none; }
 
 .topbar nav a {
-  flex: none;
+  flex: 0 1 160px;
+  min-width: max-content;
   display: flex;
   align-items: center;
-  padding: 0 16px;
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  border-radius: 3px;
-  color: #fff;
+  gap: 4px;
+  padding: 0 10px 0 5px;
+  background: var(--gris);
+  box-shadow: var(--relief);
+  color: #000;
   text-decoration: none;
-  font-size: 14px;
-  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.07) 50%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.12));
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
-  transition: background-color 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
 }
 
-.topbar nav a:hover {
-  color: #fff;
-  background-color: rgba(120, 200, 255, 0.25);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45), inset 0 -8px 14px rgba(150, 220, 255, 0.45);
+.topbar nav a::before {
+  content: "";
+  flex: none;
+  width: 16px;
+  height: 16px;
+  background: url("assets/win9x/poste.svg") no-repeat;
 }
 
-/* Bouton de la fenêtre au premier plan (posé par script.js) */
+/* Fenêtre au premier plan (posé par script.js) : bouton enfoncé */
 .topbar nav a[aria-current] {
-  background-color: rgba(255, 255, 255, 0.22);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55), inset 0 -8px 14px rgba(190, 235, 255, 0.5), 0 0 8px rgba(160, 225, 255, 0.5);
+  padding-top: 1px;
+  background: var(--damier);
+  box-shadow: var(--enfonce);
+  font-weight: bold;
 }
+
+.topbar nav a:active { box-shadow: var(--enfonce); }
 
 .topbar nav a:focus-visible {
-  outline: 2px solid #fff;
+  outline: 1px dotted #000;
   outline-offset: -4px;
 }
 
 /* Zone de notification : l'horloge est ajoutée par script.js */
 .horloge {
   flex: none;
+  display: flex;
+  align-items: center;
+  height: 24px;
   padding: 0 10px;
-  font-size: 12px;
-  line-height: 1.35;
-  text-align: center;
+  box-shadow: var(--creux-leger);
   white-space: nowrap;
 }
 
-.horloge span { display: block; }
+/* --- Menu Démarrer (construit par script.js) --- */
+.menu-demarrer {
+  position: fixed;
+  left: 2px;
+  bottom: calc(var(--barre-taches) - 3px);
+  z-index: 101;
+  display: flex;
+  min-width: 250px;
+  max-width: calc(100vw - 4px);
+  max-height: calc(100vh - var(--barre-taches));
+  padding: 3px;
+  background: var(--gris);
+  box-shadow: var(--relief-fenetre);
+  font-size: 13px;
+}
 
-/* Le bouton « Afficher le bureau », au bout de la barre */
-.topbar::after {
+.menu-demarrer[hidden] { display: none; }
+
+/* Bandeau vertical, lu de bas en haut comme celui de Windows 98 */
+.menu-demarrer::before {
+  content: "Raphaël Canevet";
+  content: "Raphaël Canevet" / "";
+  flex: none;
+  width: 26px;
+  padding: 8px 0;
+  background: linear-gradient(0deg, #000080, #1084d0);
+  color: var(--gris);
+  font: bold 18px/26px var(--police-titre);
+  letter-spacing: 1px;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.menu-demarrer ul {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.menu-demarrer a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 3px 24px 3px 6px;
+  color: #000;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.menu-demarrer a:hover,
+.menu-demarrer a:focus-visible {
+  outline: none;
+  background: var(--surbrillance);
+  color: #fff;
+}
+
+/* Les icônes 16 x 16 doublées en 32 x 32, comme les grandes icônes du menu */
+.menu-demarrer a::before {
   content: "";
   flex: none;
-  align-self: stretch;
-  width: 14px;
-  border-left: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.35);
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.04));
+  width: 32px;
+  height: 32px;
+  background: url("assets/win9x/document.svg") center / 32px no-repeat;
 }
+
+.menu-demarrer .separateur {
+  height: 2px;
+  margin: 3px 2px;
+  border-top: 1px solid var(--gris-fonce);
+  border-bottom: 1px solid #fff;
+}
+
+/* --- Icônes par destination : fenêtres, boutons de tâches et menu ---
+   Chaque règle cite l'id français et son équivalent sous /en/. */
+#apropos > h2::before,
+#about > h2::before,
+.topbar nav a[href$="#apropos"]::before,
+.topbar nav a[href$="#about"]::before,
+.menu-demarrer [data-icone="apropos"]::before,
+.menu-demarrer [data-icone="about"]::before { background-image: url("assets/win9x/bloc-notes.svg"); }
+
+#formation > h2::before,
+#education > h2::before,
+.topbar nav a[href$="#formation"]::before,
+.topbar nav a[href$="#education"]::before,
+.menu-demarrer [data-icone="formation"]::before,
+.menu-demarrer [data-icone="education"]::before { background-image: url("assets/win9x/livre.svg"); }
+
+#competences > h2::before,
+#skills > h2::before,
+.topbar nav a[href$="#competences"]::before,
+.topbar nav a[href$="#skills"]::before,
+.menu-demarrer [data-icone="competences"]::before,
+.menu-demarrer [data-icone="skills"]::before { background-image: url("assets/win9x/engrenage.svg"); }
+
+#projets > h2::before,
+#projects > h2::before,
+.topbar nav a[href$="#projets"]::before,
+.topbar nav a[href$="#projects"]::before,
+.menu-demarrer [data-icone="projets"]::before,
+.menu-demarrer [data-icone="projects"]::before { background-image: url("assets/win9x/dossier.svg"); }
+
+#stages > h2::before,
+#internships > h2::before,
+.topbar nav a[href$="#stages"]::before,
+.topbar nav a[href$="#internships"]::before,
+.menu-demarrer [data-icone="stages"]::before,
+.menu-demarrer [data-icone="internships"]::before { background-image: url("assets/win9x/mallette.svg"); }
+
+#contact > h2::before,
+.topbar nav a[href$="#contact"]::before,
+.menu-demarrer [data-icone="contact"]::before { background-image: url("assets/win9x/enveloppe.svg"); }
+
+.menu-demarrer [data-icone="clef"]::before { background-image: url("assets/win9x/clef.svg"); }
+.menu-demarrer [data-icone="langue"]::before { background-image: url("assets/win9x/globe.svg"); }
+.menu-demarrer [data-icone="accueil"]::before { background-image: url("assets/win9x/poste.svg"); }
 
 /* --- Mise en page --- */
 main {
   max-width: var(--largeur);
   margin: 0 auto;
-  padding: 44px var(--gouttiere) 10px;
+  padding: 32px var(--gouttiere) 6px;
 }
 
 h1 {
   margin: 0 0 6px;
   font-family: var(--police-titre);
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1.15;
-  color: #0b3a78;
+  letter-spacing: -0.5px;
 }
 
 h2 {
-  margin: 0 0 18px;
-  font-size: 1.5rem;
-  font-weight: 400;
-  line-height: 1.25;
-  color: var(--titre);
+  margin: 0 0 16px;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 h3 {
   margin: 0 0 4px;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: #143a6b;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 h4 {
   margin: 22px 0 4px;
-  font-size: 0.98rem;
-  font-weight: 600;
-  color: var(--titre);
+  font-size: 14px;
+  font-weight: 700;
 }
 
 p { margin: 0 0 14px; }
 
-/* --- Accueil : panneau de verre façon écran de bienvenue --- */
-.hero {
-  position: relative;
-  margin: 0 0 34px;
-  padding: 30px 32px 32px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 16px;
-  background:
-    linear-gradient(165deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.32) 38%, rgba(255, 255, 255, 0.14) 38.5%, rgba(255, 255, 255, 0.34) 100%),
-    rgba(214, 238, 255, 0.35);
-  box-shadow:
-    inset 0 1px 0 #fff,
-    inset 0 0 22px rgba(255, 255, 255, 0.5),
-    0 14px 44px rgba(0, 40, 100, 0.3);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  backdrop-filter: blur(14px) saturate(1.4);
-}
-
-.hero:has(> .tuile) {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  column-gap: 30px;
-  align-items: start;
-}
-
-.hero:has(> .tuile) > * { grid-column: 2; }
-
-/* Image du compte, comme à l'ouverture de session de Windows 7 */
-.tuile {
-  grid-column: 1;
-  grid-row: 1 / span 4;
-  display: block;
-  width: 144px;
-  height: 144px;
-  padding: 8px;
-  border-radius: 12px;
-  background: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.4) 51%, rgba(255, 255, 255, 0.8));
-  box-shadow:
-    0 0 0 1px rgba(30, 80, 140, 0.35),
-    inset 0 0 0 1px #fff,
-    0 6px 18px rgba(0, 40, 100, 0.35);
-  -webkit-box-reflect: below 6px linear-gradient(transparent 64%, rgba(255, 255, 255, 0.3));
-}
-
-.hero:has(> .tuile) > .tuile { grid-column: 1; }
-
-@supports (-webkit-background-clip: text) or (background-clip: text) {
-  .hero h1,
-  .code-erreur {
-    background: linear-gradient(#2a86da, #0b3a78 62%, #145a9e);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.9)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
-  }
-}
-
-.role {
-  margin: 0 0 12px;
-  color: var(--vert);
-  font-weight: 600;
-}
-
-.tagline {
-  margin: 0 0 24px;
-  font-size: 1.08rem;
-  color: #1d3550;
-  max-width: 62ch;
-}
-
-/* --- Boutons --- */
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 0;
-}
-
-/* Bouton standard de Windows 7 */
-.btn {
-  display: inline-block;
-  padding: 7px 16px;
-  border: 1px solid #707070;
-  border-radius: 3px;
-  background: linear-gradient(#f2f2f2, #ebebeb 49%, #dddddd 50%, #cfcfcf);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.75);
-  color: #000;
-  font-size: 15px;
-  text-decoration: none;
-}
-
-.btn:hover {
-  border-color: #3c7fb1;
-  background: linear-gradient(#eaf6fd, #d9f0fc 49%, #bee6fd 50%, #a7d9f5);
-  color: #000;
-}
-
-.btn:active {
-  border-color: #2c628b;
-  background: linear-gradient(#e5f4fc, #c4e5f6 49%, #98d1ef 50%, #68b3db);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
-}
-
-/* Bouton principal : la pastille verte brillante, très Frutiger Aero */
-.btn-primary,
-form button {
-  border: 1px solid #1b6115;
-  border-radius: 999px;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.18) 46%, rgba(255, 255, 255, 0) 50%),
-    linear-gradient(#45ad35, #1f7a19 55%, #2f9426);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    inset 0 -3px 8px rgba(190, 255, 150, 0.45),
-    0 2px 8px rgba(20, 90, 20, 0.35);
-  color: #fff;
-  font-weight: 600;
-  text-shadow: 0 1px 1px rgba(0, 40, 0, 0.65);
-}
-
-.btn-primary:hover,
-form button:hover {
-  border-color: #1b6115;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.22) 46%, rgba(255, 255, 255, 0) 50%),
-    linear-gradient(#56c243, #258a1e 55%, #3aa72f);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.75),
-    inset 0 -3px 10px rgba(200, 255, 160, 0.6),
-    0 0 12px rgba(120, 230, 90, 0.7);
-  color: #fff;
-}
-
-.btn-primary:active,
-form button:active {
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.1) 46%, rgba(255, 255, 255, 0) 50%),
-    linear-gradient(#2f8f25, #1a6a15);
-  box-shadow: inset 0 2px 4px rgba(0, 40, 0, 0.45);
-}
-
-/* --- Fenêtres Aero --- */
-main > section:not(.hero),
+/* --- Fenêtres --- */
+main > section,
 main.erreur {
   position: relative;
-  margin: 0 0 30px;
-  padding: 22px 28px 26px;
-  border: var(--cadre-epaisseur) solid transparent;
-  border-top-width: var(--barre-titre);
-  border-radius: var(--rayon-fenetre);
-  background:
-    linear-gradient(var(--client), var(--client)) padding-box,
-    linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 26px) border-box,
-    repeating-linear-gradient(115deg, rgba(255, 255, 255, 0) 0 70px, rgba(255, 255, 255, 0.16) 70px 96px, rgba(255, 255, 255, 0) 96px 190px) border-box,
-    var(--cadre) border-box;
-  box-shadow:
-    0 0 0 1px rgba(10, 30, 55, 0.55),
-    inset 0 0 0 1px rgba(40, 70, 105, 0.4),
-    0 14px 40px rgba(0, 35, 90, 0.35);
-  -webkit-backdrop-filter: blur(10px) saturate(1.3);
-  backdrop-filter: blur(10px) saturate(1.3);
-}
-
-/* Liseré clair sur le bord extérieur du cadre en verre */
-main > section:not(.hero)::before,
-main.erreur::before {
-  content: "";
-  position: absolute;
-  top: calc(-1 * var(--barre-titre));
-  left: calc(-1 * var(--cadre-epaisseur));
-  right: calc(-1 * var(--cadre-epaisseur));
-  bottom: calc(-1 * var(--cadre-epaisseur));
-  border-radius: var(--rayon-fenetre);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
-  pointer-events: none;
-}
-
-/* Boutons Réduire / Agrandir / Fermer, décoratifs */
-main > section:not(.hero)::after,
-main.erreur::after {
-  content: "";
-  position: absolute;
-  top: calc(1px - var(--barre-titre));
-  right: calc(6px - var(--cadre-epaisseur));
-  width: 100px;
-  height: 20px;
-  background: url("assets/aero/boutons-fenetre.svg") no-repeat;
-  transition: opacity 0.3s;
-}
-
-/* Fenêtres en arrière-plan : cadre plus pâle, boutons éteints. La classe
-   fenetres-actives n'est posée que si script.js suit la fenêtre visible. */
-.fenetres-actives main > section:not(.hero):not(.premier-plan) {
-  --cadre: var(--cadre-inactif);
-}
-
-.fenetres-actives main > section:not(.hero):not(.premier-plan)::after {
-  opacity: 0.5;
+  margin: 0 0 28px;
+  padding: 3px 16px 18px;
+  background: var(--gris);
+  box-shadow: var(--relief-fenetre);
 }
 
 main > section:not(.hero) {
-  scroll-margin-top: calc(var(--barre-titre) + 18px);
+  scroll-margin-top: 18px;
 }
 
+/* Barre de titre : le h2 de la section, ou le ::before de l'assistant et
+   des boîtes de dialogue. Marge négative : elle va d'un bord à l'autre. */
+main > section:not(.hero) > h2,
+.hero::before,
+main.erreur::before {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: var(--hauteur-titre);
+  margin: 0 -13px 16px;
+  padding: 2px 60px 2px 3px;
+  background: var(--titre-actif);
+  color: #fff;
+  font: bold 13px/18px var(--police);
+  letter-spacing: 0.2px;
+}
+
+main > section:not(.hero) > h2::before {
+  content: "";
+  flex: none;
+  width: 16px;
+  height: 16px;
+  background: url("assets/win9x/document.svg") no-repeat;
+}
+
+/* Boutons Réduire / Agrandir / Fermer, décoratifs */
+main > section:not(.hero) > h2::after,
+.hero::after,
+main.erreur::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 50px;
+  height: 14px;
+  background: url("assets/win9x/boutons-fenetre.svg") no-repeat;
+}
+
+/* Fenêtres en arrière-plan : barre de titre grise. La classe fenetres-actives
+   n'est posée que si script.js suit la fenêtre visible. */
+.fenetres-actives main > section:not(.hero):not(.premier-plan) > h2,
+.fenetres-actives .hero:not(.premier-plan)::before {
+  background-color: #808080;
+  background-image: var(--titre-inactif);
+  color: #e8e8e8;
+}
+
+/* Poignée de redimensionnement, dans le coin bas droit */
+main > section:not(.hero)::after {
+  content: "";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 12px;
+  height: 12px;
+  background: url("assets/win9x/poignee.svg") no-repeat;
+}
+
+/* Infobulle jaune pour les encadrés à retenir */
 .objectif {
   position: relative;
-  min-height: 52px;
-  padding: 12px 16px 12px 54px;
-  border: 1px solid #a9cdee;
-  border-radius: 6px;
-  background: linear-gradient(#f6fbff, #e1f0fd);
-  box-shadow: inset 0 1px 0 #fff;
+  min-height: 56px;
+  padding: 11px 14px 11px 56px;
+  border: 1px solid #000;
+  background: var(--infobulle);
 }
 
 .objectif::before {
   content: "";
   position: absolute;
-  top: 12px;
-  left: 14px;
-  width: 26px;
-  height: 26px;
-  background: url("assets/aero/info.svg") center / contain no-repeat;
+  top: 11px;
+  left: 12px;
+  width: 32px;
+  height: 32px;
+  background: url("assets/win9x/info.svg") no-repeat;
 }
 
-/* --- Formation --- */
-.timeline { list-style: none; padding: 0; margin: 0; }
+.objectif:last-child { margin-bottom: 0; }
 
-.timeline li {
-  display: flex;
-  gap: 20px;
-  padding: 14px 4px;
-  border-bottom: 1px solid #e1eaf4;
-}
-
-.timeline li:last-child { border-bottom: none; }
-
-.periode {
-  flex: 0 0 132px;
-  align-self: flex-start;
-  margin-top: 2px;
-  padding: 1px 10px;
-  border: 1px solid #8cc2ea;
-  border-radius: 999px;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.45) 50%, rgba(255, 255, 255, 0) 51%),
-    linear-gradient(#e2f3ff, #a9d8f6);
-  color: #0d3a63;
-  font-size: 13px;
-  text-align: center;
-}
-
-.timeline p { margin: 0; color: var(--texte-doux); font-size: 15px; }
-
-/* --- Cartes (gadgets) --- */
-.grille {
+/* --- Accueil : premier écran d'un assistant Windows 2000 --- */
+.hero {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-  gap: 16px;
+  grid-template-columns: 164px minmax(0, 1fr);
+  /* Titre, nom, rôle, accroche (qui prend la hauteur restante), boutons */
+  grid-template-rows: auto auto auto 1fr auto;
+  padding: 3px;
 }
 
-.carte {
-  padding: 16px 18px;
-  border: 1px solid #c3d7ec;
-  border-radius: 8px;
-  background: linear-gradient(#ffffff, #eff6fd 60%, #e3effb);
-  box-shadow: inset 0 1px 0 #fff, 0 2px 6px rgba(20, 70, 130, 0.12);
+.hero::before {
+  content: "Assistant de bienvenue";
+  content: "Assistant de bienvenue" / "";
+  grid-column: 1 / -1;
+  margin: 0 0 2px;
+  padding-left: 23px;
+  background:
+    url("assets/win9x/poste.svg") 3px center no-repeat,
+    var(--titre-actif);
 }
 
-.carte p { font-size: 15px; margin-bottom: 0; }
-.carte .meta { color: var(--texte-doux); font-size: 13px; margin-bottom: 10px; }
+.fenetres-actives .hero:not(.premier-plan)::before {
+  background:
+    url("assets/win9x/poste.svg") 3px center no-repeat,
+    var(--titre-inactif);
+}
 
-/* --- Étiquettes : pastilles en bulle --- */
-.tags {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0 0;
+:lang(en) .hero::before {
+  content: "Welcome Wizard";
+  content: "Welcome Wizard" / "";
+}
+
+/* Bannière latérale de l'assistant (image décorative) */
+.tuile {
+  grid-column: 1;
+  grid-row: 2 / span 3;
+  display: block;
+  width: 164px;
+  height: 100%;
+  min-height: 230px;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Le volet blanc de droite : les éléments s'empilent sans marge pour que
+   leurs fonds forment un seul panneau. */
+.hero > h1,
+.hero > .role,
+.hero > .tagline {
+  grid-column: 2;
+  margin: 0;
+  padding: 0 28px;
+  background: #fff;
+}
+
+.hero > h1 { padding-top: 26px; padding-bottom: 8px; }
+
+.role {
+  padding-bottom: 14px !important;
+  color: var(--surbrillance);
+  font-weight: 700;
+}
+
+.hero > .tagline {
+  padding-bottom: 28px;
+  max-width: none;
+  font-size: 15px;
+}
+
+/* Zone des boutons de l'assistant, sous un trait gravé */
+.actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-bottom: 0;
+}
+
+.hero > .actions {
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  padding: 12px 10px 9px;
+  box-shadow: inset 0 1px #808080, inset 0 2px #fff;
+}
+
+/* Page de contenu secondaire (confidentialité) : un document du Bloc-notes */
+.hero.page { grid-template-columns: minmax(0, 1fr); }
+
+.hero.page::before {
+  content: "Confidentialité.txt - Bloc-notes";
+  content: "Confidentialité.txt - Bloc-notes" / "";
+  background:
+    url("assets/win9x/bloc-notes.svg") 3px center no-repeat,
+    var(--titre-actif);
+}
+
+.fenetres-actives .hero.page:not(.premier-plan)::before {
+  background:
+    url("assets/win9x/bloc-notes.svg") 3px center no-repeat,
+    var(--titre-inactif);
+}
+
+:lang(en) .hero.page::before {
+  content: "Privacy.txt - Notepad";
+  content: "Privacy.txt - Notepad" / "";
+}
+
+.hero.page > h1,
+.hero.page > .tagline { grid-column: 1; }
+.hero.page > h1 { padding-bottom: 12px; }
+.hero.page > .tagline { padding-bottom: 24px; }
+
+/* --- Boutons --- */
+.btn,
+form button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 75px;
+  min-height: 26px;
+  margin: 0;
+  padding: 4px 14px;
+  border: 0;
+  border-radius: 0;
+  background: var(--gris);
+  box-shadow: var(--relief);
+  color: #000;
+  font: 13px var(--police);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover,
+form button:hover { color: #000; }
+
+/* Bouton par défaut : liseré noir en plus */
+.btn-primary,
+form button { box-shadow: var(--relief-defaut); }
+
+.btn:active,
+form button:active {
+  padding: 5px 13px 3px 15px;
+  box-shadow: inset 0 0 0 1px #0a0a0a, inset 0 0 0 2px #808080;
+}
+
+.btn:focus-visible,
+form button:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -5px;
+}
+
+form button:disabled {
+  color: #808080;
+  text-shadow: 1px 1px #fff;
+  box-shadow: var(--relief);
+  cursor: default;
+}
+
+/* --- Formation : liste « Détails » de l'Explorateur --- */
+.timeline {
+  margin: 0;
+  padding: 2px;
+  list-style: none;
+  background: #fff;
+  box-shadow: var(--creux);
+}
+
+.timeline li {
+  display: flex;
+  gap: 18px;
+  padding: 10px 12px;
+}
+
+.timeline li + li { border-top: 1px dotted var(--gris); }
+
+.periode {
+  flex: 0 0 140px;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  color: var(--surbrillance);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.periode::before {
+  content: "";
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  background: url("assets/win9x/livre.svg") no-repeat;
+}
+
+.timeline h3 { line-height: 20px; }
+.timeline p { margin: 0; color: var(--texte-doux); font-size: 14px; }
+
+/* --- Cartes : cadres de groupe gravés --- */
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: 26px 18px;
+  padding-top: 8px;
+}
+
+.carte {
+  padding: 16px 14px 14px;
+  border: 1px solid var(--gris-fonce);
+  box-shadow: inset 1px 1px #fff, 1px 1px #fff;
+}
+
+/* L'intitulé du groupe interrompt le trait du haut */
+.carte h3 {
+  display: table;
+  margin: -25px 0 10px -5px;
+  padding: 0 4px;
+  background: var(--gris);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.carte p { font-size: 14px; margin-bottom: 0; }
+.carte .meta { color: var(--texte-doux); font-size: 12px; margin-bottom: 8px; }
+
+/* --- Étiquettes : cases à cocher --- */
+.tags {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .tags li {
-  padding: 2px 12px;
-  border: 1px solid #7fbbe6;
-  border-radius: 999px;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 51%),
-    linear-gradient(#e0f3ff, #a3d6f6);
-  box-shadow: inset 0 -2px 4px rgba(255, 255, 255, 0.7), 0 1px 2px rgba(0, 60, 120, 0.15);
-  color: #0d3a63;
+  display: flex;
+  align-items: center;
+  gap: 7px;
   font-size: 14px;
+  line-height: 1.35;
 }
 
-.tags .encours {
-  border-style: dashed;
-  border-color: #8aa7c0;
-  background: rgba(255, 255, 255, 0.7);
-  box-shadow: none;
-  color: var(--texte-doux);
+.tags li::before {
+  content: "";
+  flex: none;
+  width: 13px;
+  height: 13px;
+  background: url("assets/win9x/case-cochee.svg") no-repeat;
 }
 
-/* Langues : variante verte */
-.tags.inline li {
-  border-color: #86c463;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 51%),
-    linear-gradient(#effbe4, #b5e396);
-  color: #1d4a10;
+/* En cours d'apprentissage : case grisée, ni cochée ni décochée */
+.tags .encours::before { background-image: url("assets/win9x/case-grisee.svg"); }
+
+.tags.inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px 26px;
 }
 
 .legende {
-  margin-top: 16px;
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 18px 0 0;
+  font-size: 13px;
   color: var(--texte-doux);
 }
 
 .puce-encours {
-  display: inline-block;
-  width: 22px;
-  height: 0;
-  border-top: 1px dashed var(--texte-doux);
-  vertical-align: middle;
-  margin-right: 6px;
+  flex: none;
+  width: 13px;
+  height: 13px;
+  background: url("assets/win9x/case-grisee.svg") no-repeat;
 }
 
-/* En-tête de groupe façon Explorateur : texte bleu, filet qui s'estompe */
+/* En-tête de groupe : texte gras suivi d'un trait gravé */
 .sous-titre {
-  margin: 30px 0 12px;
-  padding-bottom: 5px;
-  color: var(--titre);
-  background: linear-gradient(90deg, #b5cce5, rgba(181, 204, 229, 0)) left bottom / 100% 1px no-repeat;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 28px 0 12px;
+  font-size: 13px;
 }
 
-/* --- Projets --- */
+.sous-titre::after {
+  content: "";
+  flex: 1 1 auto;
+  border-top: 1px solid var(--gris-fonce);
+  border-bottom: 1px solid #fff;
+}
+
+/* --- Projets : un document WordPad --- */
 .projet {
   margin-bottom: 18px;
-  padding: 20px 22px;
-  border: 1px solid #d0e0f0;
-  border-radius: 8px;
-  background: linear-gradient(#f2f8fe, #ffffff 140px);
+  padding: 26px 30px 24px;
+  background: #fff;
+  box-shadow: var(--creux);
+  font-family: var(--police-document);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* Règle graduée de WordPad, au-dessus du document */
+.projet::before {
+  content: "";
+  display: block;
+  height: 10px;
+  margin: -16px -18px 18px;
+  border-bottom: 1px solid var(--gris);
+  background:
+    repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 48px) 0 0 / 100% 10px,
+    repeating-linear-gradient(90deg, #808080 0 1px, transparent 1px 12px) 0 6px / 100% 4px no-repeat;
 }
 
 .projet:last-child { margin-bottom: 0; }
-.projet h3 { font-size: 1.2rem; color: var(--titre); }
-.projet .chapo { color: var(--texte-doux); }
+
+.projet h3,
+.projet h4 { font-family: Arial, "Liberation Sans", Helvetica, sans-serif; }
+
+.projet h3 { margin-bottom: 8px; font-size: 1.5rem; }
+.projet h4 { font-size: 1.05rem; color: var(--surbrillance); }
+.projet .chapo { font-style: italic; }
 .projet p:last-child { margin-bottom: 0; }
 
 .a-completer {
-  color: #8a96a3;
+  color: var(--texte-doux);
   font-style: italic;
-  font-size: 15px;
+  font-size: 14px;
 }
 
-/* --- Formulaire : champs de Windows 7 --- */
+/* --- Formulaire : champs creusés --- */
 form { display: flex; flex-direction: column; max-width: 560px; }
 
 label {
-  margin: 14px 0 4px;
-  font-size: 14px;
-  color: var(--texte);
+  margin: 12px 0 3px;
+  font-size: 13px;
 }
 
 input,
 textarea {
-  padding: 6px 9px;
-  border: 1px solid;
-  border-color: #abadb3 #dbdfe6 #e3e9ef #e2e3ea;
-  border-radius: 2px;
+  padding: 5px 7px;
+  border: 0;
+  border-radius: 0;
   background: #fff;
-  color: var(--texte);
-  font-family: inherit;
-  font-size: 16px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-input:hover,
-textarea:hover {
-  border-color: #5794bf #b7d5ea #c7e2f1 #c5daed;
+  box-shadow: var(--creux);
+  color: #000;
+  font: 15px var(--police);
 }
 
 input:focus,
 textarea:focus {
-  outline: none;
-  border-color: #3d7bad #a4c9e3 #b7d9ed #b5cfe7;
-  box-shadow: 0 0 0 3px rgba(61, 149, 230, 0.22);
+  outline: 1px dotted #000;
+  outline-offset: 2px;
 }
 
-textarea { resize: vertical; }
+textarea { resize: vertical; min-height: 120px; }
 
 form button {
   align-self: flex-start;
-  margin-top: 20px;
-  padding: 8px 26px;
-  font-family: inherit;
-  font-size: 15px;
-  cursor: pointer;
+  margin-top: 18px;
+  padding: 4px 22px;
 }
 
-form button:disabled {
-  border-color: #8f8f8f;
-  background: linear-gradient(#f4f4f4, #e0e0e0);
-  box-shadow: none;
-  color: #8a8a8a;
-  text-shadow: none;
-  cursor: default;
+form button:active { padding: 5px 21px 3px 23px; }
+
+#form-status { margin-top: 14px; font-size: 14px; }
+#form-status:empty { display: none; }
+
+#form-status.ok,
+#form-status.erreur {
+  position: relative;
+  min-height: 46px;
+  padding: 8px 12px 8px 50px;
+  border: 1px solid #000;
+  background: var(--infobulle);
+  color: #000;
 }
 
-#form-status { margin-top: 14px; font-size: 15px; }
-#form-status.ok { color: #1a7f37; }
-#form-status.erreur { color: #c62828; }
+#form-status.ok::before,
+#form-status.erreur::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 10px;
+  width: 32px;
+  height: 32px;
+  background: url("assets/win9x/info.svg") no-repeat;
+}
 
-.direct { margin: 24px 0 0; font-size: 15px; color: var(--texte-doux); }
+#form-status.erreur::before { background-image: url("assets/win9x/erreur.svg"); }
 
-/* --- Pied de page : bandeau de verre au-dessus des collines --- */
+.direct { margin: 22px 0 0; font-size: 14px; color: var(--texte-doux); }
+
+/* --- Pied de page : barre d'état --- */
 footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
   width: min(calc(var(--largeur) - 2 * var(--gouttiere)), calc(100% - 2 * var(--gouttiere)));
-  margin: 0 auto 26px;
-  padding: 14px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.55);
-  box-shadow: inset 0 1px 0 #fff, 0 6px 20px rgba(0, 40, 90, 0.2);
-  -webkit-backdrop-filter: blur(10px) saturate(1.3);
-  backdrop-filter: blur(10px) saturate(1.3);
-  text-align: center;
-  font-size: 14px;
-  color: #183049;
+  margin: 0 auto 24px;
+  padding: 3px;
+  background: var(--gris);
+  box-shadow: var(--relief-fenetre);
+  font-size: 12px;
 }
 
-footer p { margin: 0; }
-footer p + p { margin-top: 6px; }
-footer a { color: #0b4f9c; }
-footer a:hover { color: var(--lien-survol); }
+footer p {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 2px 8px;
+  box-shadow: var(--creux-leger);
+}
 
-/* --- Pages d'erreur : boîte de dialogue Windows 7 --- */
+footer p:first-child { flex-grow: 4; }
+
+/* --- Pages d'erreur : boîte de dialogue --- */
 main.erreur {
-  width: min(600px, calc(100% - 2 * var(--gouttiere)));
+  width: min(560px, calc(100% - 2 * var(--gouttiere)));
   max-width: none;
-  margin: 70px auto 40px;
-  padding: 24px 28px 26px;
+  margin: 12vh auto 32px;
+  padding: 3px 16px 14px 70px;
+  background:
+    url("assets/win9x/erreur.svg") 20px 44px no-repeat,
+    var(--gris);
 }
 
-main.erreur:has(> .actions) { padding-bottom: 0; }
+/* Une boîte de dialogue porte le nom du site et n'a que le bouton Fermer */
+main.erreur::before {
+  content: "canevet.eu";
+  margin-left: -67px;
+}
 
-/* Le pied de page s'aligne sur la boîte de dialogue, plus étroite */
-main.erreur + footer { width: min(600px, calc(100% - 2 * var(--gouttiere))); }
-
-/* Une boîte de dialogue n'a que le bouton Fermer */
 main.erreur::after {
-  width: 47px;
-  background-image: url("assets/aero/bouton-fermer.svg");
+  width: 16px;
+  background-image: url("assets/win9x/bouton-fermer.svg");
 }
+
+main.erreur + footer { width: min(560px, calc(100% - 2 * var(--gouttiere))); }
 
 .code-erreur {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin: 0 0 14px;
-  font-family: var(--police-titre);
-  font-size: 3.6rem;
+  margin: 0 0 2px;
+  color: var(--texte-doux);
+  font-size: 13px;
   font-weight: 700;
-  line-height: 1;
-  letter-spacing: -1px;
-  color: #1a5fae;
 }
 
-/* L'icône est hors du dégradé du texte : ::before ne prend pas le
-   background-clip: text de son parent. */
-.code-erreur::before {
-  content: "";
-  flex: none;
-  width: 56px;
-  height: 56px;
-  background: url("assets/aero/attention.svg") center / contain no-repeat;
-}
+.code-erreur::before { content: "Erreur "; }
+:lang(en) .code-erreur::before { content: "Error "; }
 
 main.erreur h1 {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-family: var(--police);
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: var(--titre);
+  font-size: 1.2rem;
+  letter-spacing: 0;
 }
 
-main.erreur .tagline {
-  margin: 0 0 24px;
-  max-width: none;
-  color: var(--texte-doux);
-}
+main.erreur .tagline { margin: 0 0 20px; font-size: 14px; }
 
-/* Zone des boutons, grise, en bas de la boîte de dialogue */
+/* Les boutons d'une boîte de message sont centrés sous le texte */
 main.erreur .actions {
-  justify-content: flex-end;
-  margin: 0 -28px;
-  padding: 12px 16px;
-  border-top: 1px solid #dfdfdf;
-  background: #f0f0f0;
+  justify-content: center;
+  margin-left: -54px;
 }
 
 /* Page servie aux scanners qui cherchent /admin, /.env et compagnie */
+main.erreur:has(.chat-moqueur) {
+  background-image: url("assets/win9x/attention.svg"), linear-gradient(var(--gris), var(--gris));
+}
+
+main.erreur:has(.chat-moqueur)::before { content: "chat.exe"; }
+
 .chat-moqueur {
   display: block;
   max-width: 100%;
   width: 420px;
-  margin: 8px auto 0;
-  border-radius: 6px;
-  box-shadow: 0 0 0 1px rgba(30, 80, 140, 0.3), 0 4px 14px rgba(0, 40, 100, 0.25);
+  margin: 8px 0 0 -54px;
+  padding: 2px;
+  background: #fff;
+  box-shadow: var(--creux);
 }
 
-/* --- Pages de contenu secondaires --- */
-.hero.page { padding-top: 30px; }
-.hero.page .tagline { margin-bottom: 0; }
+main.erreur > p:has(> .chat-moqueur) { margin-bottom: 0; }
 
+/* --- Erreurs 5xx : écran bleu --- */
+html:has(> body.ecran-bleu) { background: #0000aa; }
+
+body.ecran-bleu {
+  padding: 0 0 40px;
+  color: #fff;
+  font-family: var(--police-console);
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+body.ecran-bleu::before,
+.ecran-bleu .topbar { display: none; }
+
+.ecran-bleu ::selection { background: #aaa; color: #0000aa; }
+
+.ecran-bleu main.erreur {
+  width: min(1000px, calc(100% - 2 * var(--gouttiere)));
+  margin: 14vh auto 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.ecran-bleu main.erreur::before,
+.ecran-bleu main.erreur::after { display: none; }
+
+/* Le bandeau gris centré, à la place du « Windows » d'origine */
+.ecran-bleu .code-erreur {
+  display: table;
+  margin: 0 auto 1.2em;
+  padding: 0 0.4em;
+  background: #aaa;
+  color: #0000aa;
+  font: inherit;
+}
+
+.ecran-bleu main.erreur h1,
+.ecran-bleu .exception,
+.ecran-bleu main.erreur .tagline {
+  margin: 0 0 1.2em;
+  font: inherit;
+  letter-spacing: 0;
+}
+
+.ecran-bleu main.erreur .actions {
+  display: block;
+  margin: 0;
+}
+
+.ecran-bleu .btn {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  color: #fff;
+  font: inherit;
+  text-align: left;
+}
+
+.ecran-bleu .btn::before { content: "*  "; white-space: pre; }
+.ecran-bleu .btn:hover { color: #ffff55; }
+.ecran-bleu .btn:active { padding: 0; box-shadow: none; }
+
+.ecran-bleu .btn:focus-visible {
+  outline: none;
+  background: #aaa;
+  color: #0000aa;
+}
+
+/* Curseur clignotant sous la dernière ligne */
+.ecran-bleu main.erreur .actions::after {
+  content: "_";
+  display: block;
+  margin-top: 1.2em;
+  animation: clignote 1.06s steps(1) infinite;
+}
+
+@keyframes clignote {
+  50% { opacity: 0; }
+}
+
+.ecran-bleu footer,
+.ecran-bleu main.erreur + footer {
+  display: block;
+  width: min(1000px, calc(100% - 2 * var(--gouttiere)));
+  margin: 2.4em auto 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  font-size: 20px;
+}
+
+.ecran-bleu footer p { padding: 0; box-shadow: none; }
+.ecran-bleu footer a { color: #fff; }
+.ecran-bleu footer a:hover { color: #ffff55; }
+
+/* --- Pages de contenu secondaires --- */
 .liste { margin: 0 0 14px; padding-left: 22px; }
 .liste li { margin-bottom: 6px; }
 
-section > .meta { color: var(--texte-doux); font-size: 14px; }
+section > .meta { color: var(--texte-doux); font-size: 13px; }
 
-/* --- Barres de défilement de Windows 7 (Chrome, Edge, Safari) --- */
-::-webkit-scrollbar { width: 17px; height: 17px; }
-
-::-webkit-scrollbar-track {
-  background: linear-gradient(90deg, #e3e3e3, #f6f6f6 25%, #f0f0f0);
-}
+/* --- Barres de défilement de Windows 95 (Chrome, Edge, Safari) --- */
+::-webkit-scrollbar { width: 16px; height: 16px; }
+::-webkit-scrollbar-track { background: var(--damier); }
+::-webkit-scrollbar-corner { background: var(--gris); }
 
 ::-webkit-scrollbar-thumb {
-  border: 1px solid #969696;
-  border-radius: 3px;
-  background: linear-gradient(90deg, #f4f4f4, #e9e9e9 50%, #d8d8d8 50%, #e2e2e2);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.85);
+  background: var(--gris);
+  box-shadow: var(--relief);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  border-color: #3c7fb1;
-  background: linear-gradient(90deg, #e3f4fc, #d6eef9 50%, #a9dbf6 50%, #c4e8fa);
+::-webkit-scrollbar-button:single-button {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background: var(--gris) no-repeat;
 }
+
+::-webkit-scrollbar-button:single-button:vertical:decrement { background-image: url("assets/win9x/fleche-haut.svg"); }
+::-webkit-scrollbar-button:single-button:vertical:increment { background-image: url("assets/win9x/fleche-bas.svg"); }
+::-webkit-scrollbar-button:single-button:horizontal { display: none; }
 
 @supports (-moz-appearance: none) {
-  html { scrollbar-color: #b8cde2 #eef3f8; }
+  html { scrollbar-color: var(--gris) var(--gris-clair); }
 }
 
 /* --- Petits écrans --- */
 @media (max-width: 640px) {
-  :root {
-    --gouttiere: 14px;
-    --cadre-epaisseur: 6px;
-    --barre-titre: 28px;
+  :root { --gouttiere: 10px; }
+
+  body { font-size: 14px; }
+
+  main { padding-top: 16px; }
+
+  main > section:not(.hero) { padding: 3px 12px 16px; }
+  main > section:not(.hero) > h2 { margin-left: -9px; margin-right: -9px; }
+
+  /* L'assistant perd sa bannière latérale */
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  .tuile { display: none; }
+
+  .hero > h1,
+  .hero > .role,
+  .hero > .tagline {
+    grid-column: 1;
+    padding-left: 18px;
+    padding-right: 18px;
   }
 
-  main { padding-top: 26px; }
+  .hero > h1 { padding-top: 20px; }
+  .hero > .tagline { padding-bottom: 20px; }
+  .hero > .actions { justify-content: flex-start; }
 
-  main > section:not(.hero),
-  main.erreur {
-    padding: 18px 18px 22px;
-  }
+  h1 { font-size: 1.6rem; }
 
-  main.erreur .actions { margin: 0 -18px; }
-  main.erreur:has(> .actions) { padding-bottom: 0; }
+  .projet { padding: 20px 16px 18px; font-size: 17px; }
+  .projet::before { margin: -10px -4px 16px; }
 
-  .hero { padding: 24px 20px 26px; }
-
-  .hero:has(> .tuile) { display: block; }
-
-  .tuile {
-    width: 104px;
-    height: 104px;
-    padding: 6px;
-    margin-bottom: 26px;
-  }
-
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.35rem; }
-  .code-erreur { font-size: 2.8rem; }
-  .code-erreur::before { width: 44px; height: 44px; }
-
-  .timeline li { flex-direction: column; gap: 6px; }
+  .timeline li { flex-direction: column; gap: 4px; }
   .periode { flex: none; }
 
-  /* Seul l'orbe reste visible ; le nom reste lu par les lecteurs d'écran */
+  main.erreur { padding-left: 16px; background-position: 14px 42px, 0 0; }
+  main.erreur::before { margin-left: -13px; }
+  main.erreur > .code-erreur,
+  main.erreur > h1 { margin-left: 46px; }
+  main.erreur .actions { margin-left: 0; }
+  .chat-moqueur { margin-left: 0; }
+
+  body.ecran-bleu { font-size: 20px; }
+
+  /* Seule l'icône du bouton Démarrer reste visible ; le nom reste lu */
   .brand { font-size: 0; gap: 0; padding-right: 4px; }
-  .topbar nav a { padding: 0 12px; }
+  .topbar nav a { flex-basis: auto; }
 }
 
 @media (max-width: 520px) {
   .horloge { display: none; }
 }
 
-/* Moins de mouvement : les bulles restent immobiles */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  body::after { animation: none; }
-}
-
-/* Moins de transparence : verre dépoli remplacé par des aplats */
-@media (prefers-reduced-transparency: reduce) {
-  :root {
-    --client: #fff;
-    --cadre: #b4cde8;
-    --cadre-inactif: #d3e1ef;
-  }
-
-  .topbar { background: #1d3f63; }
-  .hero, footer { background: rgba(255, 255, 255, 0.94); }
-  body::after { display: none; }
+  .ecran-bleu main.erreur .actions::after { animation: none; }
 }
 
 /* Easter egg : pluie Matrix (code Konami, voir script.js) */
@@ -915,8 +1188,7 @@ section > .meta { color: var(--texte-doux); font-size: 14px; }
    pour que l'effet occupe vraiment tout l'écran. */
 body.mode-matrix { overflow: hidden; }
 
-/* Bascule français / anglais, discrète, en bas de page */
-.lien-langue { font-size: 13px; opacity: 0.75; }
+/* Bascule français / anglais, discrète, dans la barre d'état */
 .lien-langue a { text-decoration: none; border-bottom: 1px dotted currentColor; }
 
 /* Champ piège du formulaire : invisible pour les visiteurs, rempli par

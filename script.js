@@ -11,6 +11,7 @@ const TEXTES = {
     echec: "L'envoi a échoué. Vous pouvez m'écrire directement par e-mail.",
     horsLigne: "Envoi impossible, vérifiez votre connexion.",
     legendePluie: "Échap pour revenir au monde réel",
+    menuDemarrer: "Menu Démarrer",
   },
   en: {
     console: "What are you doing in here? Off you go, nothing to see.",
@@ -19,6 +20,7 @@ const TEXTES = {
     echec: "Sending failed. You can also write to me directly by e-mail.",
     horsLigne: "Could not send, please check your connection.",
     legendePluie: "Esc to go back to the real world",
+    menuDemarrer: "Start menu",
   },
 }[LANGUE];
 
@@ -64,34 +66,128 @@ if (form) {
   });
 }
 
-// --- Thème Aero : horloge de la barre des tâches ---
-// Purement décorative, comme la zone de notification de Windows 7 : elle est
-// masquée aux lecteurs d'écran.
+// --- Thème Windows 9x : horloge de la barre des tâches ---
+// Purement décorative, comme la zone de notification de Windows 98 : l'heure
+// seule, la date en infobulle. Elle est masquée aux lecteurs d'écran.
 const barreDesTaches = document.querySelector(".topbar");
 
 if (barreDesTaches) {
   const LOCALE = LANGUE === "en" ? "en-GB" : "fr-FR";
   const horloge = document.createElement("div");
-  const heure = document.createElement("span");
-  const date = document.createElement("span");
   horloge.className = "horloge";
   horloge.setAttribute("aria-hidden", "true");
-  horloge.append(heure, date);
   barreDesTaches.append(horloge);
 
   const mettreAJourHorloge = () => {
     const maintenant = new Date();
-    heure.textContent = maintenant.toLocaleTimeString(LOCALE, { hour: "2-digit", minute: "2-digit" });
-    date.textContent = maintenant.toLocaleDateString(LOCALE);
+    horloge.textContent = maintenant.toLocaleTimeString(LOCALE, { hour: "2-digit", minute: "2-digit" });
+    horloge.title = maintenant.toLocaleDateString(LOCALE, { weekday: "long", day: "numeric", month: "long", year: "numeric" });
   };
 
   mettreAJourHorloge();
   setInterval(mettreAJourHorloge, 10000);
 }
 
-// --- Thème Aero : fenêtre au premier plan ---
-// La section qui passe au milieu de l'écran devient la fenêtre active (cadre
-// plus vif) et son bouton s'allume dans la barre des tâches. Sans script,
+// --- Thème Windows 9x : menu Démarrer ---
+// Le nom dans la barre des tâches devient le bouton Démarrer. Le menu reprend
+// les liens déjà présents sur la page (fenêtres, boutons de l'accueil, pied
+// de page), sans doublon : rien n'y est propre au script. Sans JavaScript, le
+// nom reste un simple libellé et tous ces liens restent accessibles ailleurs.
+const libelleDemarrer = document.querySelector(".topbar .brand");
+
+if (libelleDemarrer) {
+  const bouton = document.createElement("button");
+  bouton.type = "button";
+  bouton.className = "brand";
+  bouton.textContent = libelleDemarrer.textContent;
+  bouton.setAttribute("aria-expanded", "false");
+  bouton.setAttribute("aria-controls", "menu-demarrer");
+
+  const menu = document.createElement("nav");
+  menu.id = "menu-demarrer";
+  menu.className = "menu-demarrer";
+  menu.setAttribute("aria-label", TEXTES.menuDemarrer);
+  menu.hidden = true;
+  const liste = document.createElement("ul");
+  menu.append(liste);
+
+  // Icône d'après la destination du lien, voir [data-icone] dans style.css
+  const icone = (lien) => {
+    const href = lien.getAttribute("href");
+    if (lien.hash && lien.pathname === location.pathname) return lien.hash.slice(1);
+    if (href.endsWith(".asc")) return "clef";
+    if (lien.hasAttribute("hreflang")) return "langue";
+    if (/^\/(en\/)?(index\.html)?$/.test(lien.pathname)) return "accueil";
+    return "document";
+  };
+
+  const vus = new Set();
+  const groupes = [
+    document.querySelectorAll(".topbar nav a"),
+    document.querySelectorAll(".hero .actions a"),
+    document.querySelectorAll("footer a"),
+  ];
+
+  groupes.forEach((liens) => {
+    const nouveaux = [...liens].filter((lien) => !vus.has(lien.href));
+    if (!nouveaux.length) return;
+
+    if (liste.children.length) {
+      const separateur = document.createElement("li");
+      separateur.className = "separateur";
+      separateur.setAttribute("aria-hidden", "true");
+      liste.append(separateur);
+    }
+
+    nouveaux.forEach((lien) => {
+      vus.add(lien.href);
+      const copie = lien.cloneNode(true);
+      copie.removeAttribute("class");
+      copie.dataset.icone = icone(lien);
+      const element = document.createElement("li");
+      element.append(copie);
+      liste.append(element);
+    });
+  });
+
+  libelleDemarrer.replaceWith(bouton);
+  document.body.append(menu);
+
+  const ouvrir = (ouvert) => {
+    menu.hidden = !ouvert;
+    bouton.setAttribute("aria-expanded", String(ouvert));
+  };
+
+  bouton.addEventListener("click", () => {
+    ouvrir(menu.hidden);
+    if (!menu.hidden) menu.querySelector("a")?.focus();
+  });
+
+  // Un lien choisi, un clic ailleurs ou Échap referment le menu
+  menu.addEventListener("click", (e) => {
+    if (e.target.closest("a")) ouvrir(false);
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!menu.hidden && !menu.contains(e.target) && !bouton.contains(e.target)) ouvrir(false);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !menu.hidden) {
+      ouvrir(false);
+      bouton.focus();
+    }
+  });
+
+  // Le focus qui quitte le menu au clavier (Tab) le referme aussi
+  menu.addEventListener("focusout", (e) => {
+    if (!menu.contains(e.relatedTarget) && e.relatedTarget !== bouton) ouvrir(false);
+  });
+}
+
+// --- Thème Windows 9x : fenêtre au premier plan ---
+// La section qui passe au milieu de l'écran devient la fenêtre active (barre
+// de titre bleue) et son bouton s'allume dans la barre des tâches. Sans script,
 // toutes les fenêtres gardent l'aspect actif.
 const sections = document.querySelectorAll("main > section");
 
