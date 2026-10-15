@@ -30,7 +30,10 @@ curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8080/
 
 ## Architecture
 
-Request path in production: internet → remote FRP server (terminates HTTPS) → `frpc` container → `portfolio` nginx container (plain HTTP, port 80 on the Docker network). nginx never sees TLS, but all canonical URLs and redirects it emits are `https://`. Port 8080 is published on `127.0.0.1` only; public exposure is exclusively via frpc.
+Request path in production: internet → remote FRP server (terminates HTTPS) → `frpc` container → `portfolio` nginx container (plain HTTP on port 81 with PROXY protocol v2, on the Docker network). nginx never sees TLS, but all canonical URLs and redirects it emits are `https://`. Port 8080 is published on `127.0.0.1` only; public exposure is exclusively via frpc.
+
+- **Client IP comes from PROXY protocol, on port 81 only.** frpc (`transport.proxyProtocolVersion = "v2"`) talks to nginx's `listen 81 proxy_protocol`; `real_ip_header proxy_protocol` trusts the private Docker ranges, so `$remote_addr` (logs included) is the visitor. Port 80 stays plain HTTP for the local `127.0.0.1:8080` mapping, which a PROXY listener would break. If the PROXY address is itself private/loopback (a reverse proxy in front of frps), the `$ip_visiteur` map falls back to the last `X-Forwarded-For` entry, filtered to `[0-9A-Fa-f:.]` so it cannot inject HTML.
+- **The 418 pages say "incident reported, client IP: …"** — a bluff, nothing is reported. `IP_DU_CLIENT` in `erreurs/418.html` and `en/errors/418.html` is replaced by `sub_filter` in their own `location =` blocks (`no-store`, since the page differs per visitor), and by `serve.py` locally.
 
 Key consequences to keep in mind:
 

@@ -20,13 +20,18 @@ DOSSIER_ERREURS_EN = RACINE / "en" / "errors"
 # Mêmes chemins que les blocs « scanners » de nginx/default.conf : les deux
 # listes doivent rester identiques, sinon l'easter egg ne se voit qu'en Docker.
 # Le préfixe /en/ est optionnel : /.env et /en/.env valent tous les deux 418.
+# « wp » couvre tous les wp-*, la dernière entrée tout fichier .php/.asp/.jsp/.cgi.
 CHEMINS_SCANNERS = re.compile(
-    r"^/(?:en/)?(?:admin|administrator|wp-admin|wp-login\.php|cpanel|panel|manage|management"
-    r"|backend|dashboard|\.env|config\.php|config\.json|wp-config\.php|\.git|\.aws"
-    r"|database\.yml|wp-content|wp-includes|xmlrpc\.php|joomla|drupal|typo3|laravel"
-    r"|phpinfo\.php|info\.php|server-status|server-info|debug|test\.php|actuator"
-    r"|phpmyadmin|pma|adminer\.php|dbadmin|\.ssh|backup\.(?:sql|zip)|\.htpasswd"
-    r"|\.htaccess|api|graphql|swagger)(?:[/.-]|$)",
+    r"^/(?:en/)?(?:admin|administrator|cpanel|panel|manage|management|manager|backend|dashboard"
+    r"|console|login|setup|install|wp|wordpress|joomla|drupal|typo3|laravel"
+    r"|telescope|_profiler|_ignition|vendor|cgi-bin|boaform|hnap1|owa|ecp"
+    r"|autodiscover|jenkins|solr|actuator|server-status|server-info|debug|phpmyadmin"
+    r"|myadmin|pma|mysql|sql|db|dbadmin|dump|backups?|shell|api|graphql|swagger"
+    r"|\.env|\.git|\.svn|\.hg|\.aws|\.ssh|\.docker|\.vscode|\.idea|\.ds_store"
+    r"|\.npmrc|\.bash_history|\.htpasswd|\.htaccess|id_rsa|id_ed25519|web\.config"
+    r"|config\.(?:json|ya?ml)|database\.yml|docker-compose\.ya?ml|secrets?"
+    r"|credentials|elmah\.axd|trace\.axd"
+    r"|(?:[^/]+/)*[^/]*\.(?:php\d?|phtml|aspx?|jsp|cgi))(?:[/.-]|$)",
     re.IGNORECASE,
 )
 
@@ -83,6 +88,10 @@ class Handler(SimpleHTTPRequestHandler):
             return super().send_error(code, message, explain)
 
         corps = page.read_bytes()
+        if code == 418:
+            # Comme le sub_filter de nginx : l'IP du visiteur, pour le bluff
+            # « Cet incident a été signalé ».
+            corps = corps.replace(b"IP_DU_CLIENT", self.client_address[0].encode())
         self.send_response(code, message)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(corps)))

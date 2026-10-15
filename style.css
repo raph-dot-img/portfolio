@@ -980,6 +980,10 @@ main.erreur:has(.chat-moqueur)::before { content: "chat.exe"; }
 
 main.erreur > p:has(> .chat-moqueur) { margin-bottom: 0; }
 
+/* « Cet incident a été signalé. IP client : ... » (bluff, rien n'est envoyé) */
+.signalement { margin: 0 0 4px; font-size: 14px; }
+.signalement strong { font-family: var(--police-console); font-size: 18px; letter-spacing: 0.5px; }
+
 /* --- Erreurs 5xx : écran bleu --- */
 html:has(> body.ecran-bleu) { background: #0000aa; }
 
