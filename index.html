@@ -93,15 +93,13 @@
     <h2>À propos</h2>
     <p>
       Je suis élève en Bac Pro CIEL (Cybersécurité, Informatique et réseaux, Électronique) au Lycée Likès à Quimper.
-      L'informatique m'intéressait bien avant d'y entrer, et la formation m'a surtout donné un cadre pour structurer
-      ce que je bricolais déjà de mon côté.
+      L'informatique m'intéresse depuis tout petit, c'est donc pour cela que j'ai choisi cette formation.
     </p>
     <p>
-      En dehors des cours, je maintiens un homelab : une petite infrastructure montée à partir de plusieurs serveurs
-      récupérés. C'est là que j'apprends le plus concrètement. Administration système Linux, virtualisation,
-      conteneurs, exposition de services vers l'extérieur : chaque service que j'installe m'oblige à comprendre
-      ce qu'il y a en dessous. Je me forme actuellement à l'administration Windows Server, qui reste bien plus
-      répandu en entreprise, ainsi qu'à l'adressage IPv4 et IPv6.
+      En dehors des cours, j'ai un homelab : c'est une petite infrastructure montée à partir de plusieurs serveurs récupérés. 
+      C'est dessus que j'expérimente, et c'est même dessus que cette page web tourne actuellement. 
+      J'essaye d'apprendre l'administration système Linux, la virtualisation, les conteneurs (avec Docker), etc. Je veux me former à l'administration Windows Server, 
+      qui reste bien plus répandue en entreprise que Linux (malheureusement), ainsi qu'à l'adressage IPv4 et IPv6.
     </p>
   </section>
 
@@ -116,14 +114,14 @@
         </div>
       </li>
       <li>
-        <span class="periode">En préparation</span>
+        <span class="periode">En cours</span>
         <div>
           <h3>CISCO IT Essentials 8</h3>
           <p>Certification sur le matériel informatique, les systèmes d'exploitation et le support utilisateur.</p>
         </div>
       </li>
       <li>
-        <span class="periode">2025</span>
+        <span class="periode">2025-2026</span>
         <div>
           <h3>Brevet des collèges</h3>
           <p>Obtenu.</p>
@@ -165,7 +163,7 @@
         <ul class="tags">
           <li>Docker</li>
           <li>Maintenance matérielle</li>
-          <li>Gestion de parc</li>
+          <li class="encours">Gestion de parc</li>
         </ul>
       </div>
     </div>
@@ -185,18 +183,17 @@
     <article class="projet">
       <h3>Homelab</h3>
       <p class="chapo">
-        Une mini infrastructure montée à la maison à partir de plusieurs serveurs récupérés. C'est mon terrain d'apprentissage principal : virtualisation, services auto-hébergés,
-        et accès depuis l'extérieur via un reverse proxy.
+        Une mini infrastructure montée à la maison à partir de plusieurs serveurs récupérés. C'est mon terrain d'apprentissage de test : virtualisation, services auto-hébergés, contenerisation, etc.
       </p>
 
       <h4>Matériel</h4>
       <p>Mon homelab se compose de trois machines de récup : un laptop HP et deux vieilles tours. Pas beaucoup de RAM, du stockage sur HDD, mais j'ai fait avec et j'en suis content.</p>
 
       <h4>Infrastructure et services</h4>
-      <p>Je fais tourner des services, principalement pour des amis. Par exemple Piwigo et Jellyfin pour le multimédia, ainsi que plusieurs serveurs Minecraft. J'ai testé des serveurs TeamSpeak, Matrix, et même un serveur mail.</p>
+      <p>Je fais tourner des services, principalement pour des amis. Par exemple Piwigo et Jellyfin pour le multimédia, ainsi que plusieurs serveurs Minecraft. J'ai testé de faire des serveurs TeamSpeak, Matrix, et même un serveur mail.</p>
 
       <h4>Réseau et accès distant</h4>
-      <p>J'utilise FRP et Nginx Reverse Proxy pour exposer mes services. Je protège donc mes services avec un reverse proxy.</p>
+      <p>J'utilise FRP et Nginx Reverse Proxy pour exposer mes services. Je cache et gère donc mes services grâce à un reverse proxy.</p>
 
       <h4>Ce que j'en ai appris</h4>
       <p>Tout cela m'a permis d'apprendre Docker, l'administration système Linux, la sécurité réseau, la virtualisation ainsi qu'un tas d'autres choses.</p>
@@ -208,21 +205,20 @@
 
     <div class="grille">
       <div class="carte">
-        <h3>Service informatique d'un établissement scolaire</h3>
+        <h3>Service informatique d'un établissement scolaire à Bruz</h3>
         <p class="meta">Stage de 3<sup>e</sup> &middot; 2 semaines</p>
         <p>
           Découverte de la gestion d'un parc informatique : maintenance matérielle sur un grand nombre
-          de postes, diagnostic de pannes et remise en service. Un premier contact avec le travail
-          en équipe informatique et la réalité d'un parc à maintenir.
+          de postes, diagnostic de pannes et remise en service.
         </p>
       </div>
       <div class="carte">
-        <h3>Centre de formation d'apprentis</h3>
+        <h3>Centre de formation d'apprentis à Rennes</h3>
         <p class="meta">Stage &middot; 5 jours</p>
         <p>
           Cette fois davantage orienté logiciel que matériel : gestion de parc et virtualisation avec
           des outils professionnels comme VMware et Windows Server. C'est ce stage qui m'a donné envie
-          d'approfondir la virtualisation.
+          d'approfondir la virtualisation et l'administration réseau.
         </p>
       </div>
     </div>
@@ -231,8 +227,8 @@
   <section id="contact">
     <h2>Contact</h2>
     <p>
-      Une question, une proposition de stage ou de PFMP ? Écrivez-moi directement,
-      je réponds dès que possible.
+      Une question, une proposition de stage ou de PFE ? Écrivez-moi directement,
+      je réponds dès que possible. N'hésitez pas également à signaler tout problèmes avec le site.
     </p>
 
     <form id="contact-form" action="https://formspree.io/f/xppwzowj" method="POST">
