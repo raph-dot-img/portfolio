@@ -821,6 +821,39 @@ form button:disabled {
 .projet .chapo { font-style: italic; }
 .projet p:last-child { margin-bottom: 0; }
 
+/* Schéma du homelab : un objet Paint incrusté dans le document */
+.schema {
+  margin: 4px 0 18px;
+  padding: 3px;
+  background: var(--gris);
+  box-shadow: var(--relief);
+}
+
+.schema svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #fff;
+  box-shadow: var(--creux-leger);
+  font-family: var(--police);
+}
+
+/* Trop petit pour être lu à moins de 560 px : on fait défiler le dessin */
+.schema-defilement { overflow-x: auto; }
+.schema-defilement svg { min-width: 560px; }
+
+.schema figcaption {
+  padding: 4px 4px 1px;
+  font: 13px var(--police);
+  color: var(--texte-doux);
+}
+
+.schema-nom { font-size: 15px; font-weight: bold; }
+.schema-petit { font-size: 12px; fill: var(--texte-doux); }
+.schema-service { font-size: 13px; white-space: pre; }
+.schema-zone { font-size: 14px; font-weight: bold; fill: var(--surbrillance); }
+.schema-tunnel { font-size: 13px; font-weight: bold; fill: #c00000; }
+
 .a-completer {
   color: var(--texte-doux);
   font-style: italic;
