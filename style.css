@@ -944,6 +944,17 @@ footer p {
 }
 
 footer p:first-child { flex-grow: 4; }
+footer .lien-source { text-align: center; }
+
+/* Mention discrète sur sa propre ligne, sous les cases de la barre d'état */
+footer .mention-ia {
+  flex-basis: 100%;
+  padding: 1px 8px 0;
+  box-shadow: none;
+  color: var(--texte-doux);
+  font-size: 11px;
+  text-align: center;
+}
 
 /* --- Pages d'erreur : boîte de dialogue --- */
 main.erreur {
@@ -1114,6 +1125,7 @@ body.ecran-bleu::before,
 .ecran-bleu footer p { padding: 0; box-shadow: none; }
 .ecran-bleu footer a { color: #fff; }
 .ecran-bleu footer a:hover { color: #ffff55; }
+.ecran-bleu footer .mention-ia { margin-top: 1em; color: inherit; font-size: 16px; text-align: left; }
 
 /* --- Pages de contenu secondaires --- */
 .liste { margin: 0 0 14px; padding-left: 22px; }
