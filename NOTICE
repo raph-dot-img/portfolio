@@ -1,11 +1,11 @@
 
-Scope of the MIT License in LICENSE
+Scope of the Microsoft Reference Source License (Ms-RSL) in LICENSE
 
 Personal content is excluded from that license.
 
-The "Software" it covers is the source code of the site (HTML markup,
+The "software" it covers is the source code of the site (HTML markup,
 CSS, JavaScript, configuration and scripts) and the icons in assets/win9x/.
-The following personal content is NOT covered by the MIT License and remains
+The following personal content is NOT covered by the Ms-RSL and remains
 all rights reserved:
 
 - assets/CANEVET_Raphael_CV.pdf (the CV);
@@ -17,7 +17,8 @@ all rights reserved:
   of course be used to encrypt messages to the author or verify signatures,
   but not be presented as anyone else's.
 
-If you reuse this code, replace that content with your own.
+The Ms-RSL only allows reading the code for reference; it does not allow
+modifying or redistributing it.
 
 Third-party files are not covered either and keep their own terms:
 - assets/polices/ is under the SIL Open Font License 1.1
