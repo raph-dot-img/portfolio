@@ -3,6 +3,24 @@ services:
     image: nginx:alpine
     container_name: portfolio
     restart: unless-stopped
+    # Durcissement : système de fichiers en lecture seule (seuls le cache,
+    # le PID et ./logs restent inscriptibles), aucune élévation de privilèges
+    # et seulement les capacités dont nginx a besoin pour démarrer (ports
+    # < 1024, bascule vers l'utilisateur nginx, propriétaire du cache).
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+      - NET_BIND_SERVICE
     ports:
       # Accès local uniquement. L'exposition publique passe par frpc.
       - "127.0.0.1:8080:80"
@@ -35,6 +53,16 @@ services:
     image: snowdreamtech/frpc:latest
     container_name: portfolio-frpc
     restart: unless-stopped
+    # frpc n'ouvre que des connexions sortantes. Seules restent les capacités
+    # dont le script de démarrage de l'image a besoin pour changer d'utilisateur.
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETUID
+      - SETGID
     depends_on:
       - portfolio
     volumes:
