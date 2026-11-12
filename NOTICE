@@ -1,26 +1,53 @@
+What the MIT license in LICENSE covers, and what it does not
+============================================================
 
-Scope of the Microsoft Reference Source License (Ms-RSL) in LICENSE
+In short: the code is free to reuse. My personal content is not.
 
-Personal content is excluded from that license.
 
-The "software" it covers is the source code of the site (HTML markup,
-CSS, JavaScript, configuration and scripts) and the icons in assets/win9x/.
-The following personal content is NOT covered by the Ms-RSL and remains
-all rights reserved:
+1. Covered by the MIT license (see LICENSE)
+-------------------------------------------
 
-- assets/CANEVET_Raphael_CV.pdf (the CV);
-- the written content of the pages that describe the author (biography,
-  education, skills, projects, internships, contact details), in French and
-  in English;
-- the author's name, identity and PGP key
-  (assets/Raphael_CANEVET_0xB78F8AFB9EF231BC_public.asc). The public key may
-  of course be used to encrypt messages to the author or verify signatures,
-  but not be presented as anyone else's.
+- The source code of the site: HTML markup, CSS, JavaScript, nginx, Docker
+  and FRP configuration, serve.py.
+- The generic interface texts (error pages, buttons, script messages).
+- The Windows 9x style icons and decorations in assets/win9x/, and
+  assets/favicon.svg, drawn for this site.
 
-The Ms-RSL only allows reading the code for reference; it does not allow
-modifying or redistributing it.
+You may use, copy, modify and redistribute them, including commercially,
+as long as you keep the copyright notice and the text of LICENSE.
 
-Third-party files are not covered either and keep their own terms:
+
+2. NOT covered: personal content, all rights reserved
+-----------------------------------------------------
+
+The following content is about me, Raphaël Canevet. It is excluded from the
+MIT license and remains all rights reserved:
+
+- assets/CANEVET_Raphael_CV.pdf (my CV);
+- the written content of the pages that describe me (biography, education,
+  skills, projects, internships, contact details) and the privacy policy
+  (confidentialite.html, en/privacy.html), in French and in English;
+- my name, identity, e-mail addresses and other contact
+  details, wherever they appear in the files (page text, meta tags, JSON-LD
+  block, script strings);
+- my PGP key (assets/Raphael_CANEVET_0xB78F8AFB9EF231BC_public.asc). It may
+  of course be used to encrypt messages to me or verify my signatures, but
+  not be presented as anyone else's.
+
+Much of this content is personal data, also protected by the GDPR whatever
+the license says. Please do not reuse it, and do not present yourself as me.
+
+If you reuse the code for your own site, replace all of this content with
+your own before publishing it. The domain names (canevet.eu...) and the
+Google Search Console verification file (googlefcec097abc8fdb0a.html) are
+specific to this site: replace or remove them too.
+
+
+3. Third-party content: its own terms
+-------------------------------------
+
+These files are not mine and are not covered by the MIT license either:
+
 - assets/polices/ is under the SIL Open Font License 1.1
   (see assets/polices/LICENCE-VT323.txt);
 - assets/laughing-cat.gif is an Internet meme whose original author is
