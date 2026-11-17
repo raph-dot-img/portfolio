@@ -956,6 +956,35 @@ footer .mention-ia {
   text-align: center;
 }
 
+/* Bascule vers le thème terminal (ajoutée par theme.js), sur sa ligne */
+footer .choix-theme {
+  flex-basis: 100%;
+  padding: 5px 8px 3px;
+  box-shadow: none;
+  text-align: center;
+}
+
+footer .choix-theme button {
+  min-height: 23px;
+  padding: 2px 12px;
+  border: 0;
+  background: var(--gris);
+  box-shadow: var(--relief);
+  color: #000;
+  font: 12px var(--police);
+  cursor: pointer;
+}
+
+footer .choix-theme button:active {
+  padding: 3px 11px 1px 13px;
+  box-shadow: var(--enfonce);
+}
+
+footer .choix-theme button:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+
 /* --- Pages d'erreur : boîte de dialogue --- */
 main.erreur {
   width: min(560px, calc(100% - 2 * var(--gouttiere)));
@@ -1125,6 +1154,19 @@ body.ecran-bleu::before,
 .ecran-bleu footer p { padding: 0; box-shadow: none; }
 .ecran-bleu footer a { color: #fff; }
 .ecran-bleu footer a:hover { color: #ffff55; }
+.ecran-bleu footer .choix-theme { padding: 1em 0 0; text-align: left; }
+
+.ecran-bleu footer .choix-theme button,
+.ecran-bleu footer .choix-theme button:active {
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  color: #fff;
+  font: inherit;
+}
+
+.ecran-bleu footer .choix-theme button:hover { color: #ffff55; }
+.ecran-bleu footer .choix-theme button:focus-visible { outline: none; background: #aaa; color: #0000aa; }
 .ecran-bleu footer .mention-ia { margin-top: 1em; color: inherit; font-size: 16px; text-align: left; }
 
 /* --- Pages de contenu secondaires --- */

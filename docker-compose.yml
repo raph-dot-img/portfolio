@@ -37,6 +37,8 @@ services:
       - ./confidentialite.html:/usr/share/nginx/html/confidentialite.html:ro
       - ./credits.html:/usr/share/nginx/html/credits.html:ro
       - ./style.css:/usr/share/nginx/html/style.css:ro
+      - ./terminal.css:/usr/share/nginx/html/terminal.css:ro
+      - ./theme.js:/usr/share/nginx/html/theme.js:ro
       - ./script.js:/usr/share/nginx/html/script.js:ro
       - ./robots.txt:/usr/share/nginx/html/robots.txt:ro
       - ./.well-known:/usr/share/nginx/html/.well-known:ro

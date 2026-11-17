@@ -1,0 +1,890 @@
+/*
+  Thème « terminal ambre » : le thème par défaut du site.
+  L'écran d'un vieux terminal à phosphore ambre, avant les interfaces
+  graphiques : tout en texte, cadres en traits doubles, barre de touches de
+  fonction en bas de l'écran (façon gestionnaire de fichiers des années 80).
+
+  - Chaque section est une fenêtre à double trait ; son h2 (vrai texte) est
+    posé à cheval sur le trait du haut. La fenêtre au premier plan (classe
+    premier-plan, posée par script.js) garde un trait vif, les autres sont
+    atténuées.
+  - .hero n'a pas de cadre : c'est la sortie brute d'une commande, avec
+    l'invite affichée par ::before (texte CSS, donc traduit avec :lang(en)).
+  - .topbar est la barre des touches de fonction ; les numéros viennent d'un
+    compteur CSS. script.js y ajoute le menu et l'horloge, comme pour le
+    thème Windows 95 (style.css), qui reste disponible : theme.js bascule de
+    l'une à l'autre feuille sans recharger la page.
+  - Lisibilité d'abord : police à chasse fixe du système en 16 px pour le
+    texte, VT323 seulement pour les grands titres, pas de lignes de balayage
+    ni de scintillement. Le seul clignotement (curseur) s'arrête au bout de
+    quatre secondes, et pas du tout avec prefers-reduced-motion.
+  Aucune image : la CSP refuse les data: et les styles en ligne, et tout ce
+  thème tient en caractères.
+*/
+
+/* VT323 (SIL OFL 1.1), déjà servie pour les écrans bleus du thème Windows. */
+@font-face {
+  font-family: "VT323";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/polices/vt323-latin-400-normal.woff2") format("woff2");
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Phosphore ambre sur fond presque noir. Contrastes sur --fond :
+     --ambre 10,9:1, --ambre-vif 14:1, --ambre-doux 6,9:1 (AA partout). */
+  --fond: #0c0903;
+  --ambre: #ffb000;
+  --ambre-vif: #ffd27a;
+  --ambre-doux: #d39a2c;
+  /* Traits décoratifs seulement, jamais du texte */
+  --ambre-sombre: #6b4a10;
+  --alerte: #ff7a45;
+  --lueur: 0 0 4px rgba(255, 176, 0, 0.35);
+
+  --barre-touches: 34px;
+  --gouttiere: 24px;
+  --largeur: 920px;
+
+  --police: "Cascadia Mono", "JetBrains Mono", "IBM Plex Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --police-titre: "VT323", var(--police);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--fond);
+  scroll-behavior: smooth;
+  scrollbar-color: var(--ambre-sombre) var(--fond);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding-bottom: var(--barre-touches);
+  background: var(--fond);
+  color: var(--ambre);
+  font-family: var(--police);
+  font-size: 16px;
+  line-height: 1.65;
+  /* Légère lueur du phosphore, statique */
+  text-shadow: var(--lueur);
+}
+
+::selection { background: var(--ambre); color: var(--fond); text-shadow: none; }
+
+a { color: var(--ambre-vif); text-underline-offset: 3px; }
+
+a:hover {
+  background: var(--ambre-vif);
+  color: var(--fond);
+  text-decoration: none;
+  text-shadow: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ambre-vif);
+  outline-offset: 2px;
+}
+
+strong { color: var(--ambre-vif); }
+code { color: var(--ambre-vif); font-family: var(--police); }
+
+/* --- Barre des touches de fonction --- */
+.topbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+  height: var(--barre-touches);
+  padding: 0 1ch;
+  border-top: 1px solid var(--ambre-sombre);
+  background: var(--fond);
+  font-size: 15px;
+  text-shadow: none;
+}
+
+.brand {
+  flex: none;
+  margin: 0;
+  padding: 1px 1ch;
+  border: 0;
+  background: var(--ambre);
+  color: var(--fond);
+  font: bold 15px var(--police);
+  white-space: nowrap;
+}
+
+/* Avec script.js, le nom devient le bouton du menu */
+button.brand { cursor: pointer; }
+button.brand::before { content: "≡ "; content: "≡ " / ""; }
+button.brand[aria-expanded="true"],
+button.brand:hover { background: var(--ambre-vif); }
+
+button.brand:focus-visible { outline-offset: 2px; }
+
+.topbar nav {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  gap: 1ch;
+  counter-reset: touche;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.topbar nav::-webkit-scrollbar { display: none; }
+
+/* « 1 À propos  2 Formation ... » : numéro sur le fond, libellé en vidéo inverse */
+.topbar nav a {
+  flex: none;
+  padding: 1px 1ch 1px 0;
+  background: var(--ambre-doux);
+  color: var(--fond);
+  text-decoration: none;
+  white-space: nowrap;
+  counter-increment: touche;
+}
+
+.topbar nav a::before {
+  content: counter(touche);
+  margin-right: 1ch;
+  padding: 1px 0.5ch 1px 1ch;
+  background: var(--fond);
+  color: var(--ambre);
+}
+
+.topbar nav a:hover,
+.topbar nav a[aria-current] {
+  background: var(--ambre);
+  color: var(--fond);
+  font-weight: bold;
+}
+
+.horloge {
+  flex: none;
+  color: var(--ambre-doux);
+  white-space: nowrap;
+}
+
+.horloge::before { content: "["; }
+.horloge::after { content: "]"; }
+
+/* --- Menu (construit par script.js) : une boîte au-dessus de la barre --- */
+.menu-demarrer {
+  position: fixed;
+  left: 1ch;
+  bottom: calc(var(--barre-touches) - 1px);
+  z-index: 101;
+  min-width: 30ch;
+  max-width: calc(100vw - 2ch);
+  max-height: calc(100vh - var(--barre-touches) - 8px);
+  padding: 0.5em 0;
+  border: 4px double var(--ambre);
+  background: var(--fond);
+  font-size: 15px;
+  overflow-y: auto;
+}
+
+.menu-demarrer[hidden] { display: none; }
+
+.menu-demarrer ul { margin: 0; padding: 0; list-style: none; }
+
+.menu-demarrer a {
+  display: block;
+  padding: 1px 3ch 1px 2ch;
+  color: var(--ambre);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.menu-demarrer a:hover,
+.menu-demarrer a:focus-visible {
+  outline: none;
+  background: var(--ambre);
+  color: var(--fond);
+  text-shadow: none;
+}
+
+.menu-demarrer .separateur {
+  margin: 0.4em 1ch;
+  border-top: 1px dashed var(--ambre-sombre);
+}
+
+/* --- Mise en page --- */
+main {
+  max-width: var(--largeur);
+  margin: 0 auto;
+  padding: 28px var(--gouttiere) 8px;
+}
+
+h1, h2, h3, h4 { color: var(--ambre-vif); }
+
+h1 {
+  margin: 0 0 4px;
+  font-family: var(--police-titre);
+  font-size: 3.4rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+h2 { margin: 0 0 16px; font-size: 16px; font-weight: 700; }
+h3 { margin: 0 0 4px; font-size: 16px; font-weight: 700; }
+h4 { margin: 24px 0 4px; font-size: 16px; font-weight: 700; }
+p { margin: 0 0 14px; }
+
+/* --- Fenêtres --- */
+main > section:not(.hero) {
+  position: relative;
+  margin: 0 0 38px;
+  padding: 26px 3ch 14px;
+  border: 4px double var(--ambre);
+  scroll-margin-top: 24px;
+}
+
+/* Titre à cheval sur le trait du haut, comme dans les interfaces texte */
+main > section:not(.hero) > h2 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  max-width: calc(100% - 12ch);
+  margin: 0;
+  padding: 0 1ch;
+  background: var(--fond);
+  line-height: 1.4;
+  text-align: center;
+  transform: translate(-50%, calc(-50% - 2px));
+}
+
+/* Case de fermeture, décorative, dans le coin haut gauche */
+main > section:not(.hero)::before {
+  content: "[■]";
+  content: "[■]" / "";
+  position: absolute;
+  top: 0;
+  left: 2ch;
+  padding: 0 0.5ch;
+  background: var(--fond);
+  color: var(--ambre);
+  line-height: 1.4;
+  transform: translateY(calc(-50% - 2px));
+}
+
+/* Fenêtres en arrière-plan : trait et titre atténués */
+.fenetres-actives main > section:not(.hero):not(.premier-plan) { border-color: var(--ambre-sombre); }
+.fenetres-actives main > section:not(.hero):not(.premier-plan) > h2,
+.fenetres-actives main > section:not(.hero):not(.premier-plan)::before { color: var(--ambre-doux); }
+
+.objectif {
+  padding: 10px 2ch;
+  border: 1px dashed var(--ambre-doux);
+}
+
+.objectif::before {
+  content: "NOTE  ";
+  content: "NOTE  " / "";
+  color: var(--ambre-vif);
+  font-weight: bold;
+  white-space: pre;
+}
+
+.objectif:last-child { margin-bottom: 0; }
+
+/* --- Accueil : la sortie d'une commande, sans cadre --- */
+.hero { margin: 0 0 44px; }
+
+.hero::before {
+  content: "raphael@canevet:~$ cat bienvenue.txt";
+  content: "raphael@canevet:~$ cat bienvenue.txt" / "";
+  display: block;
+  margin-bottom: 18px;
+  color: var(--ambre-doux);
+  overflow-wrap: anywhere;
+}
+
+:lang(en) .hero::before {
+  content: "raphael@canevet:~$ cat welcome.txt";
+  content: "raphael@canevet:~$ cat welcome.txt" / "";
+}
+
+.hero.page::before {
+  content: "raphael@canevet:~$ less confidentialite.txt";
+  content: "raphael@canevet:~$ less confidentialite.txt" / "";
+}
+
+:lang(en) .hero.page::before {
+  content: "raphael@canevet:~$ less privacy.txt";
+  content: "raphael@canevet:~$ less privacy.txt" / "";
+}
+
+.hero.page.licences::before {
+  content: "raphael@canevet:~$ less licences.txt";
+  content: "raphael@canevet:~$ less licences.txt" / "";
+}
+
+:lang(en) .hero.page.licences::before {
+  content: "raphael@canevet:~$ less licenses.txt";
+  content: "raphael@canevet:~$ less licenses.txt" / "";
+}
+
+/* L'image de l'assistant Windows n'a pas sa place ici */
+.tuile { display: none; }
+
+/* Curseur bloc après le nom. Il clignote quatre fois puis reste fixe :
+   rien ne clignote plus de cinq secondes (WCAG 2.2.2). */
+.hero > h1::after {
+  content: "";
+  display: inline-block;
+  width: 0.45em;
+  height: 0.75em;
+  margin-left: 0.15em;
+  background: var(--ambre-vif);
+  box-shadow: var(--lueur);
+  animation: clignote 1.06s steps(1) 4;
+}
+
+@keyframes clignote {
+  50% { opacity: 0; }
+}
+
+.role { margin: 10px 0 18px; color: var(--ambre-vif); }
+.role::before { content: "> "; content: "> " / ""; color: var(--ambre-doux); }
+
+.hero > .tagline { max-width: 70ch; }
+
+/* --- Boutons : [ Libellé ] --- */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 2ch;
+  margin-bottom: 0;
+}
+
+.btn,
+form button,
+.choix-theme button {
+  display: inline-block;
+  margin: 0;
+  padding: 2px 0.5ch;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--ambre-vif);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn::before,
+form button::before,
+.choix-theme button::before { content: "[ "; content: "[ " / ""; }
+
+.btn::after,
+form button::after,
+.choix-theme button::after { content: " ]"; content: " ]" / ""; }
+
+/* Bouton par défaut en vidéo inverse */
+.btn-primary,
+form button {
+  background: var(--ambre);
+  color: var(--fond);
+  font-weight: bold;
+  text-shadow: none;
+}
+
+.btn:hover,
+.btn:focus-visible,
+form button:hover,
+form button:focus-visible,
+.choix-theme button:hover,
+.choix-theme button:focus-visible {
+  background: var(--ambre-vif);
+  color: var(--fond);
+  text-shadow: none;
+}
+
+form button:disabled {
+  background: var(--ambre-sombre);
+  color: var(--ambre-vif);
+  cursor: default;
+}
+
+/* --- Formation --- */
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline li {
+  display: flex;
+  gap: 2ch;
+  padding: 8px 0;
+}
+
+.timeline li + li { border-top: 1px dashed var(--ambre-sombre); }
+
+.periode {
+  flex: 0 0 13ch;
+  color: var(--ambre-doux);
+  font-weight: bold;
+}
+
+.periode::before { content: "["; content: "[" / ""; }
+.periode::after { content: "]"; content: "]" / ""; }
+
+.timeline p { margin: 0; color: var(--ambre-doux); }
+
+/* --- Cartes : boîtes à trait simple, titre sur le trait --- */
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: 28px 2ch;
+  padding-top: 10px;
+}
+
+.carte {
+  padding: 16px 2ch 12px;
+  border: 1px solid var(--ambre-doux);
+}
+
+.carte h3 {
+  display: table;
+  margin: -28px 0 8px -1ch;
+  padding: 0 1ch;
+  background: var(--fond);
+}
+
+.carte p { margin-bottom: 0; }
+.carte .meta { margin-bottom: 8px; color: var(--ambre-doux); }
+
+/* --- Étiquettes : cases à cocher en texte --- */
+.tags {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tags li::before {
+  content: "[x] ";
+  content: "[x] " / "";
+  color: var(--ambre-vif);
+  white-space: pre;
+}
+
+.tags .encours::before {
+  content: "[~] ";
+  content: "[~] " / "";
+  color: var(--ambre-doux);
+}
+
+.tags.inline { flex-direction: row; flex-wrap: wrap; gap: 4px 4ch; }
+
+.legende { margin: 16px 0 0; color: var(--ambre-doux); }
+.puce-encours::before { content: "[~]"; }
+
+/* Intitulé suivi d'un trait pointillé */
+.sous-titre {
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+  margin: 28px 0 10px;
+}
+
+.sous-titre::after {
+  content: "";
+  flex: 1 1 auto;
+  border-top: 1px dashed var(--ambre-sombre);
+}
+
+/* --- Projets : un fichier texte balisé façon Markdown --- */
+.projet {
+  margin-bottom: 18px;
+  padding-left: 2ch;
+  border-left: 1px solid var(--ambre-sombre);
+}
+
+.projet:last-child { margin-bottom: 0; }
+
+.projet h3 {
+  margin-bottom: 8px;
+  font-family: var(--police-titre);
+  font-size: 2.2rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.projet h3::before { content: "# "; content: "# " / ""; color: var(--ambre-doux); }
+.projet h4::before { content: "## "; content: "## " / ""; color: var(--ambre-doux); }
+.projet .chapo { color: var(--ambre-vif); }
+.projet p:last-child { margin-bottom: 0; }
+
+/* Schéma du homelab : les couleurs du dessin (attributs SVG) sont
+   remplacées par celles du phosphore ; le CSS l'emporte sur les attributs. */
+.schema {
+  margin: 4px 0 18px;
+  padding: 8px;
+  border: 1px solid var(--ambre-doux);
+}
+
+.schema svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--police);
+  text-shadow: none;
+}
+
+.schema-defilement { overflow-x: auto; }
+.schema-defilement svg { min-width: 560px; }
+
+.schema svg text { fill: var(--ambre); }
+.schema svg [fill="#c0c0c0"] { fill: #1a1307; }
+.schema svg [fill="#ffffe1"] { fill: none; stroke: var(--ambre-doux); }
+.schema svg [stroke="#fff"] { stroke: var(--ambre-sombre); }
+.schema svg [stroke="#000"] { stroke: var(--ambre); }
+.schema svg [fill="#000"] { fill: var(--ambre); }
+.schema svg [fill="#0a0a0a"],
+.schema svg [fill="#000080"] { fill: var(--fond); stroke: var(--ambre-doux); }
+.schema svg [fill="#808080"],
+.schema svg [fill="#dfdfdf"] { fill: var(--ambre-sombre); }
+.schema svg [stroke="#808080"],
+.schema svg [stroke="#dfdfdf"],
+.schema svg [stroke="#1084d0"] { stroke: var(--ambre-doux); }
+.schema svg [fill="#00ff00"],
+.schema svg [fill="#ffff00"] { fill: var(--ambre-vif); }
+.schema svg [stroke="#c00000"] { stroke: var(--alerte); }
+.schema svg [fill="#c00000"] { fill: var(--alerte); }
+/* Les icônes Windows du dessin n'existent pas en mode texte */
+.schema svg image { display: none; }
+
+.schema-nom { font-size: 15px; font-weight: bold; }
+.schema-petit { font-size: 12px; }
+.schema-service { font-size: 13px; white-space: pre; }
+.schema svg .schema-zone { font-size: 14px; font-weight: bold; fill: var(--ambre-vif); }
+.schema svg .schema-tunnel { font-size: 13px; font-weight: bold; fill: var(--alerte); }
+
+.schema figcaption { padding-top: 6px; color: var(--ambre-doux); font-size: 14px; }
+
+.a-completer { color: var(--ambre-doux); font-style: italic; }
+
+/* --- Formulaire --- */
+form { display: flex; flex-direction: column; max-width: 60ch; }
+
+label { margin: 14px 0 4px; color: var(--ambre-vif); }
+label::before { content: "> "; content: "> " / ""; color: var(--ambre-doux); }
+
+input,
+textarea {
+  padding: 6px 1ch;
+  border: 1px solid var(--ambre-doux);
+  border-radius: 0;
+  background: var(--fond);
+  color: var(--ambre);
+  caret-color: var(--ambre-vif);
+  font: 16px var(--police);
+  text-shadow: var(--lueur);
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--ambre-vif);
+  outline: 2px solid var(--ambre-vif);
+  outline-offset: 2px;
+}
+
+textarea { resize: vertical; min-height: 130px; }
+
+form button { align-self: flex-start; margin-top: 20px; padding: 4px 1ch; }
+
+#form-status { margin-top: 14px; }
+#form-status:empty { display: none; }
+
+#form-status.ok::before {
+  content: "[ OK ] ";
+  content: "[ OK ] " / "";
+  color: var(--ambre-vif);
+  font-weight: bold;
+  white-space: pre;
+}
+
+#form-status.erreur { color: var(--alerte); }
+
+#form-status.erreur::before {
+  content: "[ERREUR] ";
+  content: "[ERREUR] " / "";
+  font-weight: bold;
+  white-space: pre;
+}
+
+:lang(en) #form-status.erreur::before {
+  content: "[ERROR] ";
+  content: "[ERROR] " / "";
+}
+
+.direct { margin: 22px 0 0; color: var(--ambre-doux); }
+
+/* --- Pied de page : ligne d'état --- */
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 0;
+  max-width: calc(var(--largeur) - 2 * var(--gouttiere));
+  margin: 0 auto 28px;
+  padding: 10px 0 0;
+  border-top: 1px dashed var(--ambre-sombre);
+  color: var(--ambre-doux);
+  font-size: 14px;
+}
+
+footer p { margin: 0; padding: 0 1.5ch; }
+footer p:first-child { padding-left: 0; }
+
+footer p + p:not(.mention-ia):not(.choix-theme) { border-left: 1px solid var(--ambre-sombre); }
+
+@media (max-width: 980px) {
+  footer { margin-left: var(--gouttiere); margin-right: var(--gouttiere); }
+}
+
+/* Bascule vers le thème Windows 95 (ajoutée par theme.js), sur sa ligne */
+footer .choix-theme {
+  flex-basis: 100%;
+  margin-top: 12px;
+  padding: 0;
+}
+
+footer .mention-ia {
+  flex-basis: 100%;
+  margin-top: 10px;
+  padding: 0;
+  font-size: 13px;
+}
+
+.lien-langue a { text-decoration: none; border-bottom: 1px dotted currentColor; }
+
+/* --- Pages d'erreur 4xx : boîte de dialogue --- */
+main.erreur {
+  position: relative;
+  width: min(620px, calc(100% - 2 * var(--gouttiere)));
+  max-width: none;
+  margin: 12vh auto 40px;
+  padding: 28px 3ch 20px;
+  border: 4px double var(--ambre);
+}
+
+main.erreur::before {
+  content: "canevet.eu";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  padding: 0 1ch;
+  background: var(--fond);
+  color: var(--ambre-vif);
+  font-weight: bold;
+  line-height: 1.4;
+  transform: translate(-50%, calc(-50% - 2px));
+}
+
+main.erreur + footer { width: min(620px, calc(100% - 2 * var(--gouttiere))); max-width: none; margin-left: auto; margin-right: auto; }
+
+.code-erreur {
+  display: table;
+  margin: 0 0 10px;
+  padding: 0 1ch;
+  background: var(--ambre);
+  color: var(--fond);
+  font-weight: bold;
+  text-shadow: none;
+}
+
+.code-erreur::before { content: "Erreur "; }
+:lang(en) .code-erreur::before { content: "Error "; }
+
+main.erreur h1 {
+  margin-bottom: 10px;
+  font-family: var(--police);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+main.erreur .tagline { margin: 0 0 20px; }
+main.erreur .actions { justify-content: center; }
+
+/* 418 : la page servie aux scanners. Le chat passe au phosphore. */
+main.erreur:has(.chat-moqueur)::before { content: "/usr/bin/cat"; }
+
+.chat-moqueur {
+  display: block;
+  max-width: 100%;
+  width: 420px;
+  margin: 12px auto 0;
+  border: 1px solid var(--ambre-doux);
+  filter: grayscale(1) sepia(1) saturate(3.5) hue-rotate(-8deg) brightness(0.95);
+}
+
+main.erreur > p:has(> .chat-moqueur) { margin-bottom: 0; }
+
+.signalement strong { font-size: 1.1em; letter-spacing: 0.5px; }
+
+/* --- Erreurs 5xx : kernel panic, plein écran, sans cadre --- */
+body.ecran-bleu { padding: 0 0 40px; font-size: 18px; }
+
+.ecran-bleu .topbar { display: none; }
+
+.ecran-bleu main.erreur {
+  width: min(860px, calc(100% - 2 * var(--gouttiere)));
+  margin: 12vh auto 0;
+  padding: 0;
+  border: 0;
+}
+
+.ecran-bleu main.erreur::before { content: none; }
+
+.ecran-bleu .code-erreur { margin-bottom: 1.2em; }
+
+.ecran-bleu main.erreur h1 { font-size: inherit; }
+
+/* Le texte de l'exception Windows (décoratif, aria-hidden) est remplacé
+   par son équivalent côté terminal. */
+.ecran-bleu .exception {
+  margin: 0 0 1.2em;
+  font-size: 0;
+}
+
+.ecran-bleu .exception::before {
+  content: "Kernel panic - not syncing: Attempted to kill init! exitcode=0x00000009";
+  color: var(--ambre-vif);
+  font-size: 18px;
+}
+
+.ecran-bleu main.erreur .tagline { margin-bottom: 1.2em; }
+
+.ecran-bleu main.erreur .actions { display: block; }
+
+.ecran-bleu .btn {
+  display: block;
+  width: fit-content;
+  margin-bottom: 4px;
+  background: none;
+  color: var(--ambre-vif);
+  font-weight: normal;
+  text-shadow: var(--lueur);
+}
+
+.ecran-bleu .btn::before { content: "* "; content: "* " / ""; }
+.ecran-bleu .btn::after { content: none; }
+
+.ecran-bleu .btn:hover,
+.ecran-bleu .btn:focus-visible { background: var(--ambre-vif); color: var(--fond); text-shadow: none; }
+
+.ecran-bleu main.erreur .actions::after {
+  content: "█";
+  content: "█" / "";
+  display: block;
+  margin-top: 1.2em;
+  animation: clignote 1.06s steps(1) 4;
+}
+
+.ecran-bleu footer,
+.ecran-bleu main.erreur + footer {
+  width: min(860px, calc(100% - 2 * var(--gouttiere)));
+  max-width: none;
+  margin: 2.4em auto 0;
+}
+
+/* --- Pages de contenu secondaires --- */
+.liste { margin: 0 0 14px; padding-left: 0; list-style: none; }
+.liste li { margin-bottom: 6px; padding-left: 2ch; text-indent: -2ch; }
+.liste li::before { content: "- "; content: "- " / ""; color: var(--ambre-doux); }
+
+section > .meta { color: var(--ambre-doux); }
+
+/* --- Petits écrans --- */
+@media (max-width: 640px) {
+  :root { --gouttiere: 12px; }
+
+  main { padding-top: 18px; }
+
+  main > section:not(.hero) { padding: 24px 1.5ch 12px; }
+  main > section:not(.hero)::before { display: none; }
+  main > section:not(.hero) > h2 { max-width: calc(100% - 4ch); }
+
+  h1 { font-size: 2.6rem; }
+  .projet { padding-left: 1.5ch; }
+  .projet h3 { font-size: 1.9rem; }
+
+  .timeline li { flex-direction: column; gap: 0; }
+  .periode { flex: none; }
+
+  main.erreur { padding: 26px 1.5ch 16px; }
+
+  body.ecran-bleu { font-size: 16px; }
+  .ecran-bleu .exception::before { font-size: 16px; }
+
+  footer p { padding: 0 1ch; }
+  footer p + p:not(.mention-ia):not(.choix-theme) { border-left: 0; }
+  footer p:not(.mention-ia):not(.choix-theme) { flex-basis: 100%; padding: 0; }
+
+  /* Seul le symbole du menu reste visible ; le nom reste lu */
+  button.brand { font-size: 0; }
+  button.brand::before { font-size: 15px; content: "≡ Menu"; content: "≡ Menu" / ""; }
+}
+
+@media (max-width: 520px) {
+  .horloge { display: none; }
+}
+
+/* Contraste renforcé demandé : plus de lueur, plus de teinte atténuée */
+@media (prefers-contrast: more) {
+  :root { --ambre-doux: var(--ambre); --ambre-sombre: var(--ambre-doux); --lueur: none; }
+  body, input, textarea { text-shadow: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero > h1::after,
+  .ecran-bleu main.erreur .actions::after { animation: none; }
+}
+
+/* Easter egg : pluie Matrix (code Konami, voir script.js) */
+.pluie-matrix {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  cursor: pointer;
+}
+
+.pluie-legende {
+  position: fixed;
+  bottom: 18px;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  margin: 0;
+  text-align: center;
+  font-family: monospace;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #1db954;
+  pointer-events: none;
+}
+
+body.mode-matrix { overflow: hidden; }
+
+/* Champ piège du formulaire : invisible pour les visiteurs */
+.piege { display: none; }

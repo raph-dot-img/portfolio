@@ -37,7 +37,7 @@ Request path in production: internet → remote FRP server (terminates HTTPS) �
 
 Key consequences to keep in mind:
 
-- **`docker-compose.yml` mounts each site file individually**, not the directory. Adding a new page or top-level asset requires adding a matching volume line *and* an entry in `serve.py`'s `RACINES_PUBLIQUES`, or it 404s in one of the two servers only. This is deliberate: `.env`, `ressources/` and `serve.py` must stay out of the container, and `serve.py` mirrors the same allowlist so the dev server never exposes the rest of the repo.
+- **`docker-compose.yml` mounts each site file individually**, not the directory. Adding a new page or top-level asset (like `terminal.css` and `theme.js`) requires adding a matching volume line *and* an entry in `serve.py`'s `RACINES_PUBLIQUES`, or it 404s in one of the two servers only. This is deliberate: `.env`, `ressources/` and `serve.py` must stay out of the container, and `serve.py` mirrors the same allowlist so the dev server never exposes the rest of the repo.
 - **Security headers live in `nginx/securite.conf` and are `include`d, never written once at server level.** nginx drops every inherited `add_header` as soon as a `location` declares one of its own, so any location that sets a header (cache, `X-Robots-Tag`) must `include /etc/nginx/securite.conf` too or it silently serves responses with no CSP and no `nosniff`. The file is mounted at `/etc/nginx/securite.conf`, deliberately outside `conf.d/` — nginx includes that whole directory into the `http` block, where these directives would not apply. The CSP is same-origin except `connect-src`/`form-action`, which allow `https://formspree.io` for the contact form; adding any third-party asset means widening it.
 - **The access log is persisted in `logs/acces.log`** (host dir mounted at `/var/log/portfolio`, outside the web root), in addition to stdout. `docker logs` is wiped whenever the container is recreated; this file is not. It is never rotated — it grows by roughly 300 KB/day. Requests to the scanner trap and `robots.txt` are `access_log off`, but a trapped request still shows up as a 418 because the internal redirect to `/erreurs/418.html` is logged.
 - **Both containers run `read_only: true` with `cap_drop: ALL`** (plus only the capabilities each entrypoint needs) and `no-new-privileges`. nginx writes only to its `tmpfs` (`/var/cache/nginx`, `/var/run`, `/tmp`) and `./logs`; anything else that needs to be writable must be added as a tmpfs or volume, or the container fails to start.
@@ -65,7 +65,15 @@ Key consequences to keep in mind:
   and comments stay French as everywhere else.
 - **The contact form posts to Formspree** from `script.js` via AJAX so the page is never left. The endpoint is hardcoded in `index.html`'s `form action` (`.env`'s `FORMSPREE_ENDPOINT` is a convenience copy, not consumed by anything at runtime). Status messages are written into `#form-status` with class `ok` / `erreur`.
 
-## Windows 9x theme
+## Themes: amber terminal (default) and Windows 9x
+
+Every page loads **two stylesheets plus `theme.js`** in its `<head>`: `terminal.css` (`data-theme="terminal"`, active) and `style.css` (`data-theme="win95"`, `media="not all"`). `theme.js` runs before first paint, reads `localStorage.theme` (`terminal` | `win95`), flips the `media` attributes and `meta[name=theme-color]`, and adds a `.choix-theme` switch button to the `footer` (before `.mention-ia`). Without JS the terminal theme is the only one. The two sheets are fully independent: **any new class or page needs styling in both**, and any new page needs the three head lines. `script.js` (Start menu, clock, `fenetres-actives`) is shared and styled by both. The privacy pages mention the `localStorage` entry; keep them accurate if anything else is ever stored.
+
+### Amber terminal theme (`terminal.css`)
+
+Text-mode look: phosphor amber on near-black, system monospace at 16 px for body text, VT323 only for large headings, double-line borders (`4px double`) with the `h2` sitting on the top border, `.topbar` as a function-key bar (numbers from a CSS counter), `.hero` as raw command output (prompt in `::before`, translated with `:lang(en)`). No images: the homelab SVG is recoloured through attribute selectors (`[fill="#c0c0c0"]`…), so changing a colour in the SVG means updating those selectors. Accessibility rules: `--ambre-sombre` is for decorative lines only (too low contrast for text), the cursor blinks 4 times then stops (WCAG 2.2.2), `prefers-reduced-motion` and `prefers-contrast: more` are handled. 5xx pages are a "kernel panic" (the Windows `.exception` text is hidden and replaced via `::before`).
+
+### Windows 9x theme (`style.css`)
 
 The site is styled as a Windows 95 / 98 / 2000 desktop (teal desktop, grey bevelled windows, taskbar).
 
