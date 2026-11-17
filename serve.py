@@ -46,6 +46,8 @@ RACINES_PUBLIQUES = {
     "confidentialite.html",
     "credits.html",
     "style.css",
+    "terminal.css",
+    "theme.js",
     "script.js",
     "robots.txt",
     "sitemap.xml",
