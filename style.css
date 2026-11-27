@@ -354,6 +354,12 @@ button.brand:focus-visible {
 .topbar nav a[href$="#contact"]::before,
 .menu-demarrer [data-icone="contact"]::before { background-image: url("assets/win9x/enveloppe.svg"); }
 
+#clefs > h2::before,
+#keys > h2::before,
+.topbar nav a[href$="#clefs"]::before,
+.topbar nav a[href$="#keys"]::before,
+.menu-demarrer [data-icone="clefs"]::before,
+.menu-demarrer [data-icone="keys"]::before,
 .menu-demarrer [data-icone="clef"]::before { background-image: url("assets/win9x/clef.svg"); }
 .menu-demarrer [data-icone="langue"]::before { background-image: url("assets/win9x/globe.svg"); }
 .menu-demarrer [data-icone="accueil"]::before { background-image: url("assets/win9x/poste.svg"); }
@@ -720,6 +726,40 @@ form button:disabled {
 
 .carte p { font-size: 14px; margin-bottom: 0; }
 .carte .meta { color: var(--texte-doux); font-size: 12px; margin-bottom: 8px; }
+
+/* --- Clefs publiques : un cadre de groupe par clef, la clef dépliable --- */
+.liste-clefs {
+  display: grid;
+  gap: 26px;
+  padding-top: 8px;
+}
+
+.clef .algo { color: var(--texte-doux); font-weight: normal; }
+.clef .algo::before { content: " - "; content: " - " / ""; }
+.clef .empreinte { font-size: 14px; }
+
+/* Une empreinte ou une clef ne contient pas d'espace où couper : on coupe
+   n'importe où plutôt que de déborder sur mobile. */
+.empreinte code,
+.clef-publique { overflow-wrap: anywhere; }
+
+.clef details { margin: 10px 0 12px; font-size: 14px; }
+.clef details:last-child { margin-bottom: 0; }
+.clef summary { cursor: pointer; }
+
+/* Champ en creux, comme une zone de texte en lecture seule. Un clic
+   sélectionne toute la clef, prête à copier. */
+.clef-publique {
+  margin: 8px 0 0;
+  padding: 6px 8px;
+  background: #fff;
+  box-shadow: var(--creux);
+  font: 13px/1.35 "Lucida Console", "Courier New", monospace;
+  white-space: pre-wrap;
+  user-select: all;
+}
+
+.clef .telecharger { font-size: 14px; }
 
 /* --- Étiquettes : cases à cocher --- */
 .tags {

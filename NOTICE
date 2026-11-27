@@ -30,9 +30,11 @@ MIT license and remains all rights reserved:
 - my name, identity, e-mail addresses and other contact
   details, wherever they appear in the files (page text, meta tags, JSON-LD
   block, script strings);
-- my PGP key (assets/Raphael_CANEVET_0xB78F8AFB9EF231BC_public.asc). It may
-  of course be used to encrypt messages to me or verify my signatures, but
-  not be presented as anyone else's.
+- my public keys: the PGP key
+  (assets/Raphael_CANEVET_0xB78F8AFB9EF231BC_public.asc) and the other keys
+  shown in the "Public keys" section of the home page. They may of course be
+  used to encrypt messages to me or verify my signatures, but not be
+  presented as anyone else's.
 
 Much of this content is personal data, also protected by the GDPR whatever
 the license says. Please do not reuse it, and do not present yourself as me.

@@ -465,6 +465,48 @@ form button:disabled {
 .carte p { margin-bottom: 0; }
 .carte .meta { margin-bottom: 8px; color: var(--ambre-doux); }
 
+/* --- Clefs publiques : une boîte par clef, la clef dépliable --- */
+.liste-clefs {
+  display: grid;
+  gap: 28px;
+  padding-top: 10px;
+}
+
+.clef .algo { color: var(--ambre-doux); font-weight: normal; }
+.clef .algo::before { content: " · "; content: " · " / ""; }
+
+/* Une empreinte ou une clef ne contient pas d'espace où couper : on coupe
+   n'importe où plutôt que de déborder sur mobile. */
+.empreinte code,
+.clef-publique { overflow-wrap: anywhere; }
+
+.clef details { margin: 8px 0 12px; }
+.clef details:last-child { margin-bottom: 0; }
+
+.clef summary {
+  cursor: pointer;
+  color: var(--ambre-vif);
+  list-style: none;
+}
+
+.clef summary::-webkit-details-marker { display: none; }
+.clef summary::before { content: "[+] "; content: "[+] " / ""; white-space: pre; }
+.clef details[open] > summary::before { content: "[-] "; content: "[-] " / ""; }
+.clef summary:hover { background: var(--ambre-vif); color: var(--fond); text-shadow: none; }
+
+/* Un clic sélectionne toute la clef, prête à copier */
+.clef-publique {
+  margin: 8px 0 0;
+  padding: 10px 2ch;
+  border: 1px dashed var(--ambre-doux);
+  color: var(--ambre-vif);
+  font: 14px/1.4 var(--police);
+  white-space: pre-wrap;
+  user-select: all;
+}
+
+.clef .telecharger { margin-bottom: 0; }
+
 /* --- Étiquettes : cases à cocher en texte --- */
 .tags {
   display: flex;
